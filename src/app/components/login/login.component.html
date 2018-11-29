@@ -1,0 +1,50 @@
+<head>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+
+<div align="center">
+  image de pizza
+
+  <form
+    id="auth"
+    action="${pageContext.request.contextPath}/authenticateTheUser"
+    method="post"
+    class="form-signin">
+
+    <h1 class="h3 mb-3 font-weight-normal">
+      <a [routerLink]="['/register']">
+        <span class="message">noAccoutRegister</span>
+      </a>
+    </h1>
+
+    <span class="message"
+          *ngIf="param.logout != null"
+          style="color: #4CAF50">
+        youJustLoggedOut
+    </span>
+    <br>
+
+    <label for="inputUsername" class="sr-only">
+      <span class="message">username</span>
+    </label>
+    <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus
+           name="username">
+    <br>
+
+    <label for="inputPassword" class="sr-only">
+      <span class="message">password</span>
+    </label>
+    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required
+           name="password">
+    <label><input type="checkbox" name="remember-me">
+      <span class="message">rememberMe</span>
+    </label>
+
+    <button class="btn btn-lg btn-primary btn-block" type="submit">
+      <span class="message">login</span>
+    </button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+  </form>
+</div>
