@@ -1,3 +1,80 @@
-<p>
-  standard-pizzas works!
+<head>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+
+<p>Pizzas
+  <span *ngIf="errorMessage != null"
+       style="color: red">
+    {{errorMessage}}
+  </span>
 </p>
+<hr>
+
+<form action="${pageContext.request.contextPath}/standardPizzas/add"
+      method="post"
+      modelAttribute="pizzaCounter">
+  <div class="container">
+    <table id="cart" class="table table-hover table-condensed">
+
+      <thead>
+      <tr>
+        <th style="width:40%">Pizza</th>
+        <th style="width:10%">Price</th>
+        <th style="width:2%" class="text-center">Selection</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let pizza of allPizzas">
+        <td data-th="Pizza">
+          <div class="row">
+            <div class="col-sm-2 hidden-xs">
+              <img src="/resources/images/{{pizza.genericName}}.png"
+                   alt="..."
+                   class="img-responsive"/>
+            </div>
+            <div class="col-sm-10">
+              <h4 class="nomargin">
+                <strong class="d-block text-gray-dark">
+                    <span class="message">
+                      {{pizza.genericName}}
+                    </span>
+                </strong>
+              </h4>
+              <h5 *ngFor="let recipe of pizza.ingredients">
+                <span class="message">{{ recipe.genericName }}</span>
+              </h5>
+            </div>
+          </div>
+        </td>
+        <td>
+          {{pizza.price}}
+        </td>
+        <td>
+          <div>
+            <input type="number"
+                   [(ngModel)]="orderedPizzas[pizza.id]"
+                   value="0" min="0" max="30"
+                   style="width: 4em" />
+          </div>
+        </td>
+      </tr>
+      </tbody>
+
+      <tfoot>
+      <tr>
+        <td align="right"></td>
+        <td align="center"></td>
+        <td>
+          <button class="btn btn-primary">
+            <span class="message">addToCart</span>
+          </button>
+        </td>
+      </tr>
+      </tfoot>
+
+    </table>
+  </div>
+</form>

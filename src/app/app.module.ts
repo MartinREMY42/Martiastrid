@@ -14,6 +14,8 @@ import {CartComponent} from './components/cart/cart.component';
 import {ErrorComponent} from './components/error/error.component';
 import {CancelPaymentComponent} from './components/cancel-payment/cancel-payment.component';
 import {CustomPizzasComponent} from './components/custom-pizzas/custom-pizzas.component';
+import {HttpClientModule} from '@angular/common/http';
+import {FormsModule} from '@angular/forms';
 
 const routes: Route[] = [
   {path: 'standardPizzas', 'component': StandardPizzasComponent},
@@ -38,6 +40,8 @@ const routes: Route[] = [
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
