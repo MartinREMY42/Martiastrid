@@ -11,7 +11,7 @@
   </span>
 </p>
 <hr>
-
+<h5> vous commandez : {{ orderedPizzas }}</h5>
 <form action="${pageContext.request.contextPath}/standardPizzas/add"
       method="post"
       modelAttribute="pizzaCounter">
@@ -43,9 +43,9 @@
                     </span>
                 </strong>
               </h4>
-              <h5 *ngFor="let recipe of pizza.ingredients">
-                <span class="message">{{ recipe.genericName }}</span>
-              </h5>
+              <span *ngFor="let recipe of pizza.ingredients">
+                <span class="message">{{ recipe.genericName }} </span>
+              </span>
             </div>
           </div>
         </td>
@@ -56,6 +56,7 @@
           <div>
             <input type="number"
                    [(ngModel)]="orderedPizzas[pizza.id]"
+                   [ngModelOptions]="{standalone: true}"
                    value="0" min="0" max="30"
                    style="width: 4em" />
           </div>

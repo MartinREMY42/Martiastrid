@@ -4,7 +4,7 @@ export interface IPizza {
   id: number;
   genericName: string;
   price: number;
-  ingredients: Set<IIngredient>;
+  ingredients: IIngredient[];
   custom: boolean;
-  category: Set<String>;
+  category: string[];
 }
