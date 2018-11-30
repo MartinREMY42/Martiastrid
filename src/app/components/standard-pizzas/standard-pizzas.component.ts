@@ -12,7 +12,7 @@ import {IIngredient} from '../../models/iingredient';
 })
 export class StandardPizzasComponent implements OnInit {
 
-  allPizzas:   IPizza[] = [
+  allPizzasMock:   IPizza[] = [
     <IPizza>{
       'id':   1,
       'genericName':  'margherita',
@@ -52,16 +52,21 @@ export class StandardPizzasComponent implements OnInit {
         {'id':  11, 'genericName':  'champignon', 'stockQuantity':  110, 'priceForComposition':  11, 'selected':  false}],
       'custom':  false,
       'category':  ['vegan']}];
+
+  allPizzas: IPizza[] = this.allPizzasMock;
+
   errorMessage;
-  orderedPizzas: any[];
+  orderedPizzas: number[] = [null, null, null, null];
 
   constructor(private http: HttpClient,
               private pizzaService: PizzaService) {
   }
 
   ngOnInit() {
+    console.log(this.allPizzas);
+    console.log(this.allPizzasMock);
     this.pizzaService.getAllPizzas().subscribe(
-      allPizzas => this.allPizzas = allPizzas,
+      allPizzas => this.allPizzas = this.allPizzasMock,
       error => this.errorMessage = <any>error
     );
   }
