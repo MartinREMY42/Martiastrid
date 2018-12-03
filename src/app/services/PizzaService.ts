@@ -16,4 +16,10 @@ export class PizzaService {
   getAllPizzas(): Observable<IPizza[]> {
     return this.http.get<IPizza[]>(this.pizzaURL);
   }
+
+  getPizzasByCategory(category: string): Observable<IPizza[]> {
+
+    const updateUrl = `${this.pizzaURL}/${category}`;
+      return this.http.get<IPizza[]>(updateUrl);
+  }
 }
