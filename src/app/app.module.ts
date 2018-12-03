@@ -16,11 +16,17 @@ import {CancelPaymentComponent} from './components/cancel-payment/cancel-payment
 import {CustomPizzasComponent} from './components/custom-pizzas/custom-pizzas.component';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
+import {StandardPizzasResolverService} from './components/standard-pizzas/standard-pizzas-resolver.service';
 
 const routes: Route[] = [
-  {path: 'standardPizzas', 'component': StandardPizzasComponent},
+  {path: 'standardPizzas', 'component': StandardPizzasComponent,
+                                  resolve: {pizzas: StandardPizzasResolverService}},
+  {path: 'standardPizzas/:category', 'component': StandardPizzasComponent,
+                                  resolve: {pizzas: StandardPizzasResolverService}},
   {path: '', redirectTo: 'loginPage', pathMatch: 'full'},
   {path: '**', 'component': LoginComponent}
+
+
 ];
 
 @NgModule({

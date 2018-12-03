@@ -8,12 +8,18 @@ import {IPizza} from '../models/IPizza';
 })
 export class PizzaService {
 
-  pizzaURL = 'http://localhost:8082/martiastrid/pizzas/';
+  pizzaURL = 'http://localhost:8082/martiastrid/api/pizzas';
 
   constructor(private http: HttpClient) {
   }
 
   getAllPizzas(): Observable<IPizza[]> {
     return this.http.get<IPizza[]>(this.pizzaURL);
+  }
+
+  getPizzasByCategorie(category: string): Observable<IPizza[]> {
+
+    const updateUrl = `${this.pizzaURL}/${category}`;
+      return this.http.get<IPizza[]>(updateUrl);
   }
 }
