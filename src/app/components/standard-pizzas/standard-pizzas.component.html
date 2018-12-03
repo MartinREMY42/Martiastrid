@@ -11,10 +11,8 @@
   </span>
 </p>
 <hr>
-<h5> vous commandez : {{ orderedPizzas }}</h5>
-<form action="${pageContext.request.contextPath}/standardPizzas/add"
-      method="post"
-      modelAttribute="pizzaCounter">
+<h5> dev info: vous allez commander : {{ orderedPizzas }}</h5>
+<form>
   <div class="container">
     <table id="cart" class="table table-hover table-condensed">
 
@@ -38,13 +36,12 @@
             <div class="col-sm-10">
               <h4 class="nomargin">
                 <strong class="d-block text-gray-dark">
-                    <span class="message">
-                      {{pizza.genericName}}
-                    </span>
+                    <span class="message">{{pizza.genericName}}</span>
                 </strong>
               </h4>
-              <span *ngFor="let recipe of pizza.ingredients">
-                <span class="message">{{ recipe.genericName }} </span>
+              <span *ngFor="let recipe of pizza.ingredients"
+                    class="message">
+                {{ recipe.genericName }}
               </span>
             </div>
           </div>
@@ -69,7 +66,8 @@
         <td align="right"></td>
         <td align="center"></td>
         <td>
-          <button class="btn btn-primary">
+          <button class="btn btn-primary"
+                  (click)="addPizzas()">
             <span class="message">addToCart</span>
           </button>
         </td>
