@@ -8,7 +8,7 @@ import {IPizza} from '../models/IPizza';
 })
 export class PizzaService {
 
-  pizzaURL = 'http://localhost:8082/martiastrid/pizzas/';
+  pizzaURL = 'http://localhost:8082/martiastrid/api/pizzas';
 
   constructor(private http: HttpClient) {
   }
