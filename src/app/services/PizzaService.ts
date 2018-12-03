@@ -17,7 +17,7 @@ export class PizzaService {
     return this.http.get<IPizza[]>(this.pizzaURL);
   }
 
-  getPizzasByCategorie(category: string): Observable<IPizza[]> {
+  getPizzasByCategory(category: string): Observable<IPizza[]> {
 
     const updateUrl = `${this.pizzaURL}/${category}`;
       return this.http.get<IPizza[]>(updateUrl);

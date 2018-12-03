@@ -1,6 +1,8 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {RouterModule, Route} from '@angular/router';
+import {HttpClientModule} from '@angular/common/http';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {AppComponent} from './app.component';
 import {WelcomeComponent} from './home/welcome.component';
@@ -14,9 +16,11 @@ import {CartComponent} from './components/cart/cart.component';
 import {ErrorComponent} from './components/error/error.component';
 import {CancelPaymentComponent} from './components/cancel-payment/cancel-payment.component';
 import {CustomPizzasComponent} from './components/custom-pizzas/custom-pizzas.component';
+
+import {StandardPizzasResolverService} from './components/standard-pizzas/standard-pizzas-resolver.service';
+
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
-import {StandardPizzasResolverService} from './components/standard-pizzas/standard-pizzas-resolver.service';
 
 const routes: Route[] = [
   {path: '', component: WelcomeComponent},
@@ -49,7 +53,8 @@ const routes: Route[] = [
     BrowserModule,
     RouterModule.forRoot(routes),
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs';
 import {IPizza} from '../../models/IPizza';
-import {PizzaService} from '../../services/PizzaService';
+import {PizzaService} from '../../services/pizzaService';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +19,6 @@ export class StandardPizzasResolverService implements Resolve<IPizza[]> {
     if (category == null) {
       return this.pizzaService.getAllPizzas();
     }
-    return this.pizzaService.getPizzasByCategorie(category);
+    return this.pizzaService.getPizzasByCategory(category);
   }
 }
