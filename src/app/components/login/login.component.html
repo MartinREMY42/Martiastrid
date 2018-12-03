@@ -7,44 +7,47 @@
 <div align="center">
   image de pizza
 
-  <form
-    id="auth"
-    action="${pageContext.request.contextPath}/authenticateTheUser"
-    method="post"
-    class="form-signin">
+  <form class="form-signin"
+        (ngSubmit)="authenticateTheUser()"
+        [formGroup]="loginForm">
 
     <h1 class="h3 mb-3 font-weight-normal">
       <a [routerLink]="['/register']">
         <span class="message">noAccountRegister</span>
       </a>
     </h1>
+    <br/>
 
-    <span class="message"
-          *ngIf="param.logout != null"
-          style="color: #4CAF50">
-        youJustLoggedOut
-    </span>
-    <br>
-
-    <label for="inputUsername" class="sr-only">
+    <label for="username" class="sr-only">
       <span class="message">username</span>
     </label>
-    <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus
-           name="username">
-    <br>
+    <input id="username"
+           class="form-control"
+           type="text"
+           placeholder="Username"
+           autofocus
+           formControlName="username">
+    <br/>
 
-    <label for="inputPassword" class="sr-only">
+    <label for="password" class="sr-only">
       <span class="message">password</span>
     </label>
-    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required
-           name="password">
-    <label><input type="checkbox" name="remember-me">
+    <input id="password"
+           class="form-control"
+           type="password"
+           placeholder="Password"
+           formControlName="password" />
+    <br/>
+
+    <label>
+      <input type="checkbox" name="remember-me">
       <span class="message">rememberMe</span>
     </label>
 
-    <button class="btn btn-lg btn-primary btn-block" type="submit">
-      <span class="message">login</span>
-    </button>
+    <input class="btn btn-lg btn-primary btn-block"
+           type="submit"
+           value="login"
+           [disabled]="!loginForm.valid" />
     <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
   </form>
 </div>
