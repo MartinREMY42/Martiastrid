@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Route} from '@angular/router';
 
 import {AppComponent} from './app.component';
-
+import {WelcomeComponent} from './home/welcome.component';
 import {LoginComponent} from './components/login/login.component';
 import {PayComponent} from './components/pay/pay.component';
 import {StandardPizzasComponent} from './components/standard-pizzas/standard-pizzas.component';
@@ -19,6 +19,7 @@ import {FormsModule} from '@angular/forms';
 import {StandardPizzasResolverService} from './components/standard-pizzas/standard-pizzas-resolver.service';
 
 const routes: Route[] = [
+  {path: '', component: WelcomeComponent},
   {path: 'standardPizzas', 'component': StandardPizzasComponent,
                                   resolve: {pizzas: StandardPizzasResolverService}},
   {path: 'standardPizzas/:category', 'component': StandardPizzasComponent,
@@ -42,6 +43,7 @@ const routes: Route[] = [
     RegisterComponent,
     StandardPizzasComponent,
     SuccessPaymentComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,
