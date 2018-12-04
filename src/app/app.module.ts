@@ -7,9 +7,9 @@ import {MenubarModule} from 'primeng/menubar';
 import {ButtonModule} from 'primeng/button';
 
 import {AppComponent} from './app.component';
-import {LoginComponent} from './components/login/login.component';
+import {LoginComponent} from './user/login/login.component';
 import {PayComponent} from './components/pay/pay.component';
-import {RegisterComponent} from './components/register/register.component';
+import {RegisterComponent} from './user/register/register.component';
 import {SuccessPaymentComponent} from './components/success-payment/success-payment.component';
 import {AccessDeniedComponent} from './components/access-denied/access-denied.component';
 import {CartComponent} from './components/cart/cart.component';
