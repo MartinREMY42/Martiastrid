@@ -1,15 +1,13 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {RouterModule} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MenubarModule} from 'primeng/menubar';
 import {ButtonModule} from 'primeng/button';
 
 import {AppComponent} from './app.component';
-import {LoginComponent} from './user/login/login.component';
 import {PayComponent} from './components/pay/pay.component';
-import {RegisterComponent} from './user/register/register.component';
 import {SuccessPaymentComponent} from './components/success-payment/success-payment.component';
 import {AccessDeniedComponent} from './components/access-denied/access-denied.component';
 import {CartComponent} from './components/cart/cart.component';
@@ -19,6 +17,7 @@ import {CustomPizzasComponent} from './components/custom-pizzas/custom-pizzas.co
 import {NavBarComponent} from './nav-bar/nav-bar.component';
 import {ProductsModule} from './products/products.module';
 import {WelcomeComponent} from './welcome/welcome.component';
+import {UserModule} from './user/user.module';
 
 @NgModule({
   declarations: [
@@ -28,15 +27,14 @@ import {WelcomeComponent} from './welcome/welcome.component';
     CartComponent,
     CustomPizzasComponent,
     ErrorComponent,
-    LoginComponent,
     PayComponent,
-    RegisterComponent,
     SuccessPaymentComponent,
     NavBarComponent,
     WelcomeComponent
   ],
   imports: [
     ProductsModule,
+    UserModule,
     RouterModule.forRoot([
       {path: 'welcome', component: WelcomeComponent},
       {path: '', redirectTo: 'welcome', pathMatch: 'full'},
