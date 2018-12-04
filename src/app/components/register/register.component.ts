@@ -7,6 +7,7 @@ import {CorrectDate} from '../../utils/correct-date.validator';
 import {RegisterService} from '../../services/register.service';
 import {first} from 'rxjs/operators';
 import {IUser} from '../../models/IUser';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -19,6 +20,7 @@ export class RegisterComponent implements OnInit {
   submitted = false;
 
   constructor(private formBuilder: FormBuilder,
+              private router: Router,
               private registerService: RegisterService) {
   }
 
@@ -47,6 +49,11 @@ export class RegisterComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
+
+    const date_string: string = JSON.stringify(this.registerForm.get('birthday').value);
+    console.log(date_string + ' stringified json');
+    const date_date: Date = new Date(date_string);
+    console.log(date_date + ' date');
     const user: IUser = {
       username: <string>this.registerForm.get('username').value,
       password: <string>this.registerForm.get('password').value,
@@ -55,11 +62,18 @@ export class RegisterComponent implements OnInit {
       nonLocked: true,
       credentialsNonExpired: true,
       authorities: [{authority: 'ROLE_USER'}],
-      birthDate: <Date>this.registerForm.get('birthDate'),
-      creationDate: <Date>Date.now(),
+      birthDate: date_date,
+      creationDate: new Date(),
       orders: []
     };
-    this.registerService.register(user);
+    this.registerService.register(user)
+      .pipe(first())
+        .subscribe(
+          data => {
+            console.log('go to standard pizzas');
+            this.router.navigate(['/standardPizzas']);
+          });
+    console.log('after the registration');
 
   }
 }

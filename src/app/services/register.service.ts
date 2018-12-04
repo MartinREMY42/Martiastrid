@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {IUser} from '../models/IUser';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,12 @@ export class RegisterService {
   url_registration = 'http://localhost:8082/martiastrid/api/registerUser'
 
   register(user: IUser) {
-    this.http.post(this.url_registration, user);
+    console.log('service about to register to the api side');
+    return this.http.post(this.url_registration, user)
+      .pipe(map(project => {
+        console.log('project : ' + project);
+        }, thisArg => {
+        console.log('thisArg : ' + thisArg);
+      }));
   }
 }
