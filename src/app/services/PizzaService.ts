@@ -6,7 +6,7 @@ import {IPizza} from '../models/IPizza';
 @Injectable({
   providedIn : 'root'
 })
-export class PizzaService {
+exgit port class PizzaService {
 
   pizzaURL = 'http://localhost:8082/martiastrid/api/pizzas';
 
