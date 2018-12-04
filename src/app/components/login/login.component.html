@@ -7,7 +7,7 @@
 <div align="center">
   image de pizza
 
-  <form class="form-signin"
+  <form class="form-login"
         (ngSubmit)="authenticateTheUser()"
         [formGroup]="loginForm">
 
@@ -26,7 +26,18 @@
            type="text"
            placeholder="Username"
            autofocus
-           formControlName="username">
+           formControlName="username"
+           [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
+    <div *ngIf="f.username.invalid && (f.username.dirty || f.username.touched)"
+         class="alert alert-danger">
+
+      <div *ngIf="f.username.errors.required">
+        Username is required.
+      </div>
+      <div *ngIf="f.username.errors.minlength">
+        Username must be at least 4 characters long.
+      </div>
+    </div>
     <br/>
 
     <label for="password" class="sr-only">
@@ -36,7 +47,18 @@
            class="form-control"
            type="password"
            placeholder="Password"
-           formControlName="password" />
+           formControlName="password"
+           [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
+    <div *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)"
+         class="alert alert-danger">
+
+      <div *ngIf="f.password.errors.required">
+        Password is required.
+      </div>
+      <div *ngIf="f.password.errors.minlength">
+        Password must be at least 4 characters long.
+      </div>
+    </div>
     <br/>
 
     <label>
@@ -50,4 +72,5 @@
            [disabled]="!loginForm.valid" />
     <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
   </form>
+  <p> debug : {{ errorMessage }}</p>
 </div>

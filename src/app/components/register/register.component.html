@@ -1,3 +1,135 @@
-<p>
-  register works!
-</p>
+<!DOCTYPE html >
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script>
+    /* $(document).ready(function () {
+      $("#passwordConfirm").keyup(function () {
+        if ($("#password").val() != $("#passwordConfirm").val()) {
+          $("#msg").html("Password do not match").css("color", "red");
+          $("#registerButton").prop('disabled', true);
+        } else {
+          $("#msg").html("Password matched").css("color", "green");
+          console.log($("#registerButton").attr("disabled"));
+          $("#registerButton").prop('disabled', false);
+          console.log($("#registerButton").attr("disabled"));
+        }
+      });
+    }); */
+  </script>
+</head>
+<body>
+
+<div align="center">
+  <img class="mb-4"
+       src="/resources/images/martichal-s-pizzeria.svg"
+       widht="200" height="200"/>
+  <br/>
+
+  <div *ngIf="errorMessage != null"
+       style="color: red">
+    {{errorMessage}}
+  </div>
+  <br/>
+
+  <form class="form-login"
+        (ngSubmit)="registerUser()"
+        [formGroup]="registerForm">
+
+    <label for="username" class="sr-only">
+      <span class="message">username</span>
+    </label>
+    <input id="username"
+           class="form-control"
+           type="text"
+           placeholder="Username"
+           autofocus
+           formControlName="username"
+           [ngClass]="{ 'is-invalid': submitted && f.username.errors }">
+    <div *ngIf="f.username.invalid && (f.username.dirty || f.username.touched)"
+         class="alert alert-danger">
+
+      <div *ngIf="f.username.errors.required">
+        Username is required.
+      </div>
+      <div *ngIf="f.username.errors.minlength">
+        Username must be at least 4 characters long.
+      </div>
+
+    </div>
+    <br/>
+
+    <label for="birthday" class="sr-only">
+      <span class="message">birthday</span>
+    </label>
+    <input id="birthday"
+           class="form-control"
+           type="date"
+           placeholder="Birthday"
+           formControlName="birthday"
+           [ngClass]="{ 'is-invalid': submitted && f.birthday.errors }">
+    <div *ngIf="f.birthday.invalid && (f.birthday.dirty || f.birthday.touched)"
+         class="alert alert-danger">
+
+      <div *ngIf="f.birthday.errors.required">
+        Username is required.
+      </div>
+
+    </div>
+    <br/>
+
+    <label for="password" class="sr-only">
+      <span class="message">password</span>
+    </label>
+    <input id="password"
+           class="form-control"
+           type="password"
+           placeholder="Password"
+           formControlName="password"
+           [ngClass]="{ 'is-invalid': submitted && f.password.errors }"/>
+    <div *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)"
+         class="alert alert-danger">
+      <div *ngIf="f.password.errors.required">
+        Password is required.
+      </div>
+      <div *ngIf="f.password.errors.minlength">
+        Password must be at least 4 characters long.
+      </div>
+    </div>
+    <br/>
+
+    <label for="passwordconf" class="sr-only">
+      <span class="message">password confirmation</span>
+    </label>
+    <input id="passwordconf"
+           class="form-control"
+           type="password"
+           placeholder="Password confirmation"
+           formControlName="passwordconf"
+           [ngClass]="{ 'is-invalid': submitted && f.passwordconf.errors }"/>
+    <div *ngIf="f.passwordconf.invalid && (f.passwordconf.dirty || f.passwordconf.touched)"
+         class="alert alert-danger">
+      <div *ngIf="f.passwordconf.errors.required">
+        Please confirm password
+      </div>
+      <div *ngIf="f.passwordconf.errors.minlength">
+        Password must be at least 4 characters long.
+      </div>
+    </div>
+    <br/>
+
+    <input id="registerButton"
+           class="btn btn-lg btn-primary btn-block"
+           type="button"
+           [disabled]="!registerForm.valid"
+           value="Submit" />
+
+  </form>
+</div>
+
+</body>
+</html>

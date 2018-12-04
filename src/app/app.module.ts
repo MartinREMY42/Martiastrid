@@ -5,7 +5,6 @@ import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {AppComponent} from './app.component';
-
 import {LoginComponent} from './components/login/login.component';
 import {PayComponent} from './components/pay/pay.component';
 import {StandardPizzasComponent} from './components/standard-pizzas/standard-pizzas.component';
@@ -19,18 +18,26 @@ import {CustomPizzasComponent} from './components/custom-pizzas/custom-pizzas.co
 
 import {StandardPizzasResolverService} from './components/standard-pizzas/standard-pizzas-resolver.service';
 
-import {HttpClientModule} from '@angular/common/http';
-import {FormsModule} from '@angular/forms';
 
 const routes: Route[] = [
-  {path: 'standardPizzas', 'component': StandardPizzasComponent,
-                                  resolve: {pizzas: StandardPizzasResolverService}},
-  {path: 'standardPizzas/:category', 'component': StandardPizzasComponent,
-                                  resolve: {pizzas: StandardPizzasResolverService}},
-  {path: '', redirectTo: 'loginPage', pathMatch: 'full'},
-  {path: '**', 'component': LoginComponent}
-
-
+  {
+    path: 'standardPizzas',
+    component: StandardPizzasComponent,
+    resolve: {pizzas: StandardPizzasResolverService}},
+  {
+    path: 'standardPizzas/:category',
+    component: StandardPizzasComponent,
+    resolve: {pizzas: StandardPizzasResolverService}},
+  {
+    path: 'register',
+    component: RegisterComponent},
+  {
+    path: '',
+    redirectTo: 'loginPage',
+    pathMatch: 'full'},
+  {
+    path: '**',
+    component: LoginComponent}
 ];
 
 @NgModule({
