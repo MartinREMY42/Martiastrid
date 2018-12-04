@@ -16,8 +16,8 @@ export function CorrectDate(birthday: string) {
     const newDate=splitdate[1] + '/' + splitdate[0]+"/"+splitdate[2];
     alert(new Date(newDate).getTime());
     */
-    const twelveYear: number  =  12 * 365  * 24 * 3600 * 1000;
-    const hundredYear: number = 100 *  365 * 24 * 3600 * 1000;
+    const twelveYear: number  =  12 * 365 * 24 * 3600 * 1000;
+    const hundredYear: number = 100 * 365 * 24 * 3600 * 1000;
 
     if (nowstamp < datestamp) {
       _birthday.setErrors({inTheFuture: true});
