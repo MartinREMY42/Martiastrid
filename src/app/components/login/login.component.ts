@@ -58,8 +58,6 @@ export class LoginComponent implements OnInit {
         error => {
           this.errorMessage = JSON.stringify(error);
         });
-
-    console.log(localStorage.getItem('currentUser'));
   }
 
 }

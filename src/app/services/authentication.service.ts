@@ -16,7 +16,7 @@ export class AuthenticationService {
       .pipe(map((res: any) => {
         // login successful if there's a jwt token in the response
         if (res && res.token) {
-          localStorage.setItem('currentUser', JSON.stringify({
+          sessionStorage.setItem('currentUser', JSON.stringify({
             username,
             token: res.token
           }));
@@ -26,15 +26,15 @@ export class AuthenticationService {
 
   logout() {
     // remove user from local storage to log user out
-    localStorage.removeItem('currentUser');
+    sessionStorage.removeItem('currentUser');
   }
 
   isLoggedIn(): boolean {
-    return ( localStorage.getItem('currentUser')) ? true : false;
+    return ( sessionStorage.getItem('currentUser')) ? true : false;
   }
 
   getJwtSubjet(): string {
-    const stored = localStorage.getItem('currentUser');
+    const stored = sessionStorage.getItem('currentUser');
     if (stored) {
       const helper = new JwtHelperService();
       return helper.decodeToken(JSON.parse(stored).token).sub;
