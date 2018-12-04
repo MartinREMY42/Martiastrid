@@ -3,13 +3,13 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Route} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MenubarModule, ButtonModule} from 'primeng/primeng';
 
 import {AppComponent} from './app.component';
 import {WelcomeComponent} from './home/welcome.component';
 import {LoginComponent} from './components/login/login.component';
 import {PayComponent} from './components/pay/pay.component';
 import {StandardPizzasComponent} from './components/standard-pizzas/standard-pizzas.component';
-import {RegisterComponent} from './components/register/register.component';
 import {SuccessPaymentComponent} from './components/success-payment/success-payment.component';
 import {AccessDeniedComponent} from './components/access-denied/access-denied.component';
 import {CartComponent} from './components/cart/cart.component';
@@ -18,18 +18,15 @@ import {CancelPaymentComponent} from './components/cancel-payment/cancel-payment
 import {CustomPizzasComponent} from './components/custom-pizzas/custom-pizzas.component';
 
 import {StandardPizzasResolverService} from './components/standard-pizzas/standard-pizzas-resolver.service';
-
-import {HttpClientModule} from '@angular/common/http';
-import {FormsModule} from '@angular/forms';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 const routes: Route[] = [
-  {path: '', component: WelcomeComponent},
-  {path: 'standardPizzas', 'component': StandardPizzasComponent,
+  {path: 'standardPizzas', component: StandardPizzasComponent,
                                   resolve: {pizzas: StandardPizzasResolverService}},
-  {path: 'standardPizzas/:category', 'component': StandardPizzasComponent,
+  {path: 'standardPizzas/:category', component: StandardPizzasComponent,
                                   resolve: {pizzas: StandardPizzasResolverService}},
-  {path: '', redirectTo: 'loginPage', pathMatch: 'full'},
-  {path: '**', 'component': LoginComponent}
+  {path: 'welcome' , component: WelcomeComponent},
+  {path: '' , redirectTo: 'welcome', pathMatch: 'full'},
 
 
 ];
@@ -44,17 +41,19 @@ const routes: Route[] = [
     ErrorComponent,
     LoginComponent,
     PayComponent,
-    RegisterComponent,
     StandardPizzasComponent,
     SuccessPaymentComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    NavBarComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MenubarModule,
+    ButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
