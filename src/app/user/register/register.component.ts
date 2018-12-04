@@ -68,11 +68,11 @@ export class RegisterComponent implements OnInit {
     };
     this.registerService.register(user)
       .pipe(first())
-        .subscribe(
-          data => {
-            console.log('go to standard pizzas');
-            this.router.navigate(['/standardPizzas']);
-          });
+      .subscribe(
+        data => {
+          console.log('go to standard pizzas');
+          this.router.navigate(['/standardPizzas']);
+        });
     console.log('after the registration');
 
   }
