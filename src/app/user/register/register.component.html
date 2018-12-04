@@ -6,21 +6,6 @@
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
   <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-  <script>
-    /* $(document).ready(function () {
-      $("#passwordConfirm").keyup(function () {
-        if ($("#password").val() != $("#passwordConfirm").val()) {
-          $("#msg").html("Password do not match").css("color", "red");
-          $("#registerButton").prop('disabled', true);
-        } else {
-          $("#msg").html("Password matched").css("color", "green");
-          console.log($("#registerButton").attr("disabled"));
-          $("#registerButton").prop('disabled', false);
-          console.log($("#registerButton").attr("disabled"));
-        }
-      });
-    }); */
-  </script>
 </head>
 <body>
 
@@ -76,7 +61,16 @@
          class="alert alert-danger">
 
       <div *ngIf="f.birthday.errors.required">
-        Username is required.
+        Birthday is required.
+      </div>
+      <div *ngIf="f.birthday.errors.inTheFuture">
+        We don't like people from the future here...
+      </div>
+      <div *ngIf="f.birthday.errors.lessThanTwelveYearAgo">
+        You're too young to eat that pizza boy !
+      </div>
+      <div *ngIf="f.birthday.errors.moreThanHundredYear">
+        Aren't you dead yet ?
       </div>
 
     </div>
@@ -116,17 +110,14 @@
       <div *ngIf="f.passwordconf.errors.required">
         Please confirm password
       </div>
-      <div *ngIf="f.passwordconf.errors.minlength">
-        Password must be at least 4 characters long.
-      </div>
+      <div *ngIf="f.passwordconf.errors.mustMatch">Passwords must match</div>
     </div>
     <br/>
 
-    <input id="registerButton"
-           class="btn btn-lg btn-primary btn-block"
-           type="button"
+    <input class="btn btn-lg btn-primary btn-block"
+           type="submit"
            [disabled]="!registerForm.valid"
-           value="Submit" />
+           value="Register" />
 
   </form>
 </div>
