@@ -13,7 +13,6 @@ import {AccessDeniedComponent} from './components/access-denied/access-denied.co
 import {CartComponent} from './components/cart/cart.component';
 import {ErrorComponent} from './components/error/error.component';
 import {CancelPaymentComponent} from './components/cancel-payment/cancel-payment.component';
-import {CustomPizzasComponent} from './components/custom-pizzas/custom-pizzas.component';
 import {NavBarComponent} from './nav-bar/nav-bar.component';
 import {ProductsModule} from './products/products.module';
 import {WelcomeComponent} from './welcome/welcome.component';
@@ -26,7 +25,6 @@ import {MyJwtInterceptorService} from './interceptors/my-jwt-interceptor.service
     AccessDeniedComponent,
     CancelPaymentComponent,
     CartComponent,
-    CustomPizzasComponent,
     ErrorComponent,
     PayComponent,
     SuccessPaymentComponent,
@@ -37,8 +35,13 @@ import {MyJwtInterceptorService} from './interceptors/my-jwt-interceptor.service
     ProductsModule,
     UserModule,
     RouterModule.forRoot([
-      {path: 'welcome', component: WelcomeComponent},
-      {path: '', redirectTo: 'welcome', pathMatch: 'full'},
+      {
+        path: 'welcome',
+        component: WelcomeComponent},
+      {
+        path: '',
+        redirectTo: 'welcome',
+        pathMatch: 'full'},
     ]),
     BrowserModule,
     HttpClientModule,

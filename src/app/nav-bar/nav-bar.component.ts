@@ -24,7 +24,7 @@ export class NavBarComponent implements OnInit {
       },
       {
         label: 'Custom Pizzas',
-        routerLink: ''
+        routerLink: '/customPizzas'
       }
     ];
   }
