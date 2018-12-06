@@ -17,7 +17,6 @@ export class AuthenticationService {
         // login successful if there's a jwt token in the response
         if (res && res.token) {
           sessionStorage.setItem('currentUser', JSON.stringify({
-            username,
             token: res.token
           }));
         }
