@@ -37,7 +37,7 @@
         </thead>
 
         <tbody>
-        <tr *ngFor="let pizza of filteredPizzas">
+        <tr *ngFor="let pizza of filteredPizzas; index as indexPizza;">
           <td data-th="Pizza">
             <div class="row">
               <div class="col-sm-2 hidden-xs">
@@ -64,7 +64,8 @@
           <td>
             <div>
               <input type="number"
-
+                     [(ngModel)]="orderedPizzas[indexPizza]"
+                     [ngModelOptions]="{standalone: true}"
                      value="0" min="0" max="30"
                      style="width: 4em" />
             </div>

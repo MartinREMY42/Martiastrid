@@ -2,8 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ICategory} from '../../models/category';
 import {IPizza} from '../../models/IPizza';
-import {PizzaService} from '../../services/pizzaService';
-import {CategoryService} from '../../services/categoryService';
+import {PizzaService} from '../services/pizzaService';
+import {CategoryService} from '../services/categoryService';
+import {CartService} from '../services/cartService';
 
 @Component({
   selector: 'app-standard-pizzas',
@@ -16,12 +17,13 @@ export class StandardPizzasComponent implements OnInit {
   filteredPizzas: IPizza[];
 
   errorMessage;
-  orderedPizzas: number[] = [null, 0, 0, 0, 0];
+  orderedPizzas: number[] = [0, 0, 0, 0];
 
-  constructor( private route: ActivatedRoute,
+  constructor(private route: ActivatedRoute,
               private router: Router,
               private pizzaService: PizzaService,
-              private categoryService: CategoryService) {
+              private categoryService: CategoryService,
+              private cartService: CartService) {
   }
 
   ngOnInit() {
@@ -39,15 +41,35 @@ export class StandardPizzasComponent implements OnInit {
       data => this.filteredPizzas = data['pizzas']
     );
     this.categoryService.getAllCategories().subscribe(
-      categories => {
-        this.allCategories = categories;
-      },
-      error1 => this.errorMessage = <any>error1
+      categories => this.allCategories = categories,
+      error => this.errorMessage = <any>error
     );
   }
 
   addPizzas() {
-    console.log('TODO'); // TODO
+    const requestedPizzas: { pizza: IPizza; quantity: number }[] = [];
+    let i = 0;
+    let qttyPizzaI: number;
+    let pizzaI: IPizza;
+    while (i < this.orderedPizzas.length) {
+      qttyPizzaI = this.orderedPizzas[i];
+      if (qttyPizzaI > 0) {
+        pizzaI = this.filteredPizzas[i];
+        requestedPizzas.push({
+          pizza: pizzaI,
+          quantity: qttyPizzaI
+        });
+      }
+      i++;
+    }
+    // console.log(JSON.stringify(requestedPizzas));
+    /* this.pizzaService.addToCart(requestedPizzas).subscribe(
+      confirmedCart => {
+        console.log(confirmedCart);
+        this.cartService.setCart(confirmedCart);
+      });
+      */
+    this.cartService.addToCart(requestedPizzas);
   }
 
 }

@@ -1,0 +1,84 @@
+<head>
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+
+<p>
+  <span code="message">customPizza</span>
+  <span *ngIf="errorMessage != null"
+        style="color: red">
+    {{errorMessage}}
+  </span>
+</p>
+
+<hr/>
+
+<div>
+  <form action="pageContext.request.contextPath/customPizza/add"
+        modelAttribute="chosenIngredients">
+    <div class="container">
+      <table id="cart" class="table table-hover table-condensed">
+        <thead>
+        <tr>
+          <th style="width:35%">Ingredients</th>
+          <th style="width:15%">
+            <span code="message">price</span>
+          </th>
+          <th style="width:8%" class="text-center">Selection</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let ingredient of allIngredients">
+          <td data-th="Product">
+            <div class="row">
+              <div class="col-sm-2 hidden-xs">
+                <img src="{{ '../../../assets/images/' + ingredient.genericName + '.png'}}"
+                     alt="..."
+                     class="img-responsive"/>
+              </div>
+              <div class="col-sm-10">
+                <h4 class="nomargin">
+                  <span code="message">{{ingredient.genericName}}</span>
+                </h4>
+              </div>
+            </div>
+          </td>
+          <td>
+            {{ingredient.priceForComposition}}
+          </td>
+          <td>
+            <input type="number"
+                   [(ngModel)]="ingredientsQuantity[ingredient.id]"
+                   [ngModelOptions]="{standalone: true}"
+                   value="0" min="0" max="30"
+                   style="width: 4em" />
+          </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+          <td align="right">
+            <label path="quantity">
+              <span code="message">quantity</span>
+            </label>
+          </td>
+          <td align="center">
+            <input path="quantity" size="4" type="number" value="1" min="1" max="30" cssStyle="width: 4em"/>
+            <div *ngIf="errorMessageCustomAmout != null"
+                 style="color: red">
+              {{errorMessageCustomAmount}}
+            </div>
+          </td>
+          <td>
+            <input type="submit" class="btn btn-primary" value="addToCart"/>
+          </td>
+        </tr>
+        </tfoot>
+      </table>
+    </div>
+
+
+  </form>
+</div>
+

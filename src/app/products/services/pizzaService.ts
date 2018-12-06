@@ -1,10 +1,10 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {IPizza} from '../models/IPizza';
+import {IPizza} from '../../models/IPizza';
 
 @Injectable({
-  providedIn : 'root'
+  providedIn: 'root'
 })
 export class PizzaService {
 
@@ -20,6 +20,11 @@ export class PizzaService {
   getPizzasByCategory(category: string): Observable<IPizza[]> {
 
     const updateUrl = `${this.pizzaURL}/${category}`;
-      return this.http.get<IPizza[]>(updateUrl);
+    return this.http.get<IPizza[]>(updateUrl);
+  }
+
+  addToCart(requestedPizza: {'pizza': IPizza; 'quantity': number}[]): Observable<{'pizza': IPizza; 'quantity': number}[]> {
+    const addUrl = this.pizzaURL + '/addToCart';
+    return this.http.post<{'pizza': IPizza; 'quantity': number}[]>(addUrl, requestedPizza);
   }
 }
