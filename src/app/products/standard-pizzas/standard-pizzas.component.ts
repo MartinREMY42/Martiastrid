@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ICategory} from '../../models/category';
-import {IPizza} from '../../models/IPizza';
+import {IPizza, Pizza} from '../../models/IPizza';
 import {PizzaService} from '../services/pizzaService';
 import {CategoryService} from '../services/categoryService';
 import {CartService} from '../services/cartService';
 import {PizzasFavoritesService} from '../../services/pizzas-favorites.service';
 import {AuthenticationService} from '../../services/authentication.service';
+import {PizzaQuantity} from '../../models/IPizzaQuantity';
 
 @Component({
   selector: 'app-standard-pizzas',
@@ -58,18 +59,21 @@ export class StandardPizzasComponent implements OnInit {
   }
 
   addPizzas() {
-    const requestedPizzas: { pizza: IPizza; quantity: number }[] = [];
+    const requestedPizzas: PizzaQuantity[] = [];
     let i = 0;
     let qttyPizzaI: number;
-    let pizzaI: IPizza;
+    let pizzaI: Pizza;
+    const wantedPizza: Pizza[] = this.filteredPizzas.map(ipizza => new Pizza(ipizza.id,
+        ipizza.genericName,
+        ipizza.price,
+        ipizza.ingredients,
+        ipizza.custom,
+        ipizza.category));
     while (i < this.orderedPizzas.length) {
       qttyPizzaI = this.orderedPizzas[i];
       if (qttyPizzaI > 0) {
-        pizzaI = this.filteredPizzas[i];
-        requestedPizzas.push({
-          pizza: pizzaI,
-          quantity: qttyPizzaI
-        });
+        pizzaI = wantedPizza[i];
+        requestedPizzas.push(new PizzaQuantity(pizzaI, qttyPizzaI));
       }
       i++;
     }

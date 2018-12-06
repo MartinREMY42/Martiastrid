@@ -1,6 +1,15 @@
-import {IPizza} from './IPizza';
+import {Pizza} from './IPizza';
 
-export interface IPizzaQuantity {
-  pizza: IPizza;
+export class PizzaQuantity {
+  pizza: Pizza;
   quantity: number;
+
+  constructor(pizza: Pizza, quantity: number) {
+    this.pizza = pizza;
+    this.quantity = quantity;
+  }
+
+  equals(other: PizzaQuantity) {
+    return this.pizza.equals(other.pizza);
+  }
 }
