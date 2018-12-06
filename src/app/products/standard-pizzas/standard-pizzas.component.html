@@ -18,6 +18,11 @@
     <a href="#" [routerLink]="[ '/standardPizzas']" class="list-group-item list-group-item-action active">
       Toutes
     </a>
+    <div *ngIf = "isLoggingIn()">
+      <a href="#" [routerLink]="[ '/standardPizzas','favorite']" class="list-group-item list-group-item-action active">
+        Favorites
+      </a>
+    </div>
     <a href="#" *ngFor='let category of allCategories' [routerLink]="[ '/standardPizzas', category]"
         class="list-group-item list-group-item-action">{{category}}</a>
   </div>

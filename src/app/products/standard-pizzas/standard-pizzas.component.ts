@@ -4,6 +4,8 @@ import {ICategory} from '../../models/category';
 import {IPizza} from '../../models/IPizza';
 import {PizzaService} from '../../services/pizzaService';
 import {CategoryService} from '../../services/categoryService';
+import {PizzasFavoritesService} from '../../services/pizzas-favorites.service';
+import {AuthenticationService} from '../../services/authentication.service';
 
 @Component({
   selector: 'app-standard-pizzas',
@@ -14,26 +16,20 @@ export class StandardPizzasComponent implements OnInit {
 
   allCategories: ICategory[];
   filteredPizzas: IPizza[];
+  pizzas: IPizza[] = [];
 
   errorMessage;
   orderedPizzas: number[] = [null, 0, 0, 0, 0];
 
   constructor( private route: ActivatedRoute,
               private router: Router,
+              private login: AuthenticationService,
               private pizzaService: PizzaService,
-              private categoryService: CategoryService) {
+              private categoryService: CategoryService,
+               private  pizzasFavorites: PizzasFavoritesService) {
   }
 
   ngOnInit() {
-    /* this.pizzaService.getAllPizzas().subscribe(
-      allPizzas => {
-        // this.allPizzas = this.allPizzasMock;
-        this.allPizzas = allPizzas;
-      },
-      error => {
-        this.errorMessage = <any>error;
-      }
-    ); */
 
     this.route.data.subscribe(
       data => this.filteredPizzas = data['pizzas']
@@ -42,8 +38,12 @@ export class StandardPizzasComponent implements OnInit {
       categories => {
         this.allCategories = categories;
       },
-      error1 => this.errorMessage = <any>error1
+      error => this.errorMessage = <any>error
     );
+  }
+
+  isLoggingIn(): boolean {
+    return this.login.isLoggedIn();
   }
 
   addPizzas() {

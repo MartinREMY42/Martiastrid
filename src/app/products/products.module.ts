@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
 import {StandardPizzasComponent} from './standard-pizzas/standard-pizzas.component';
 import {StandardPizzasResolverService} from './services/standard-pizzas-resolver.service';
+import {PizzasFavoritesService} from '../services/pizzas-favorites.service';
 
 const routes: Routes = [
   {path: 'standardPizzas', component: StandardPizzasComponent,
@@ -17,6 +18,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes)
-  ]
+  ],
+  providers: []
 })
-export class ProductsModule { }
+export class ProductsModule {  }
