@@ -1,7 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MenubarModule} from 'primeng/menubar';
 import {ButtonModule} from 'primeng/button';
@@ -18,6 +18,7 @@ import {NavBarComponent} from './nav-bar/nav-bar.component';
 import {ProductsModule} from './products/products.module';
 import {WelcomeComponent} from './welcome/welcome.component';
 import {UserModule} from './user/user.module';
+import {MyJwtInterceptorService} from './interceptors/my-jwt-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,11 @@ import {UserModule} from './user/user.module';
     MenubarModule,
     ButtonModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: MyJwtInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {
