@@ -22,7 +22,7 @@ export class AuthenticationService {
         }
       }));
   }
-
+  // commitons avec mon nom
   logout() {
     // remove user from local storage to log user out
     sessionStorage.removeItem('currentUser');
