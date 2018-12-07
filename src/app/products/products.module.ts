@@ -5,8 +5,7 @@ import {StandardPizzasComponent} from './standard-pizzas/standard-pizzas.compone
 import {StandardPizzasResolverService} from './services/standard-pizzas-resolver.service';
 import {CustomPizzasComponent} from './custom-pizzas/custom-pizzas.component';
 import {FormsModule} from '@angular/forms';
-import {PizzasFavoritesService} from '../services/pizzas-favorites.service';
-
+import { PizzaFavoriteSwitchComponent } from './pizza-favorite-switch/pizza-favorite-switch.component';
 const routes: Routes = [
   {
     path: 'standardPizzas',
@@ -19,6 +18,10 @@ const routes: Routes = [
     resolve: {pizzas: StandardPizzasResolverService}
   },
   {
+    path: 'addPizzaFavorite/:idPizza',
+    component: PizzaFavoriteSwitchComponent
+  },
+  {
     path: 'customPizzas',
     component: CustomPizzasComponent
   }
@@ -27,7 +30,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     StandardPizzasComponent,
-    CustomPizzasComponent
+    CustomPizzasComponent,
+    PizzaFavoriteSwitchComponent
   ],
   imports: [
     CommonModule,

@@ -37,6 +37,7 @@
         <tr>
           <th style="width:40%">Pizza</th>
           <th style="width:10%">Price</th>
+          <th style="width:10%">Favorites</th>
           <th style="width:2%" class="text-center">Selection</th>
         </tr>
         </thead>
@@ -67,6 +68,15 @@
             {{pizza.price}}
           </td>
           <td>
+            <div id="favourite_star">
+              <a href="#"
+                 [routerLink]="[ '/standardPizzas']"
+                  (click)="switchPizzaFavoriteness(pizza.id)">
+
+                <i class="fa fa-fw fa-star-o"></i></a>
+            </div>
+          </td>
+          <td>
             <div>
               <input type="number"
                      [(ngModel)]="orderedPizzas[indexPizza]"
@@ -95,4 +105,10 @@
     </div>
   </form>
 </div>
+
+<script>
+  $(".favourite_icon").click(function(){
+    $(this).css({"color": "yellow"}).removeClass('fa-star-o').addClass('fa-star');
+  });
+</script>
 
