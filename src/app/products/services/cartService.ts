@@ -21,34 +21,36 @@ export class CartService {
     localStorage.setItem('pizzaCart', JSON.stringify(cart));
   }
 
-  addToCart(addedPizzasQuantity: IPizzaQuantity[]): IPizzaQuantity[] {
+  addToCart(addedIPizzaQuantities: IPizzaQuantity[]): IPizzaQuantity[] {
     if (this.authenticationService.isLoggedIn()) {
       console.log('todo');
       return null;
     } else {
       const cart: IPizzaQuantity[] = this.getCart();
-      const pizzas: Pizza[] = cart.map( ipq => new Pizza(ipq.pizza));
+      const mappedCart: Pizza[] = cart.map( ipq => new Pizza(ipq.pizza));
       console.log('old cart : ' + JSON.stringify(cart));
-      let i = 0;
-      let j;
-      let currentPQ: IPizzaQuantity;
-      let currentPizza: Pizza;
-      while (i < addedPizzasQuantity.length) {
-        currentPQ = addedPizzasQuantity[i];
-        currentPizza = new Pizza(currentPQ.pizza);
-        j = indexOf(pizzas, currentPizza);
-        if (j === -1) {
+      let indexNewPQ = 0;
+      let indexDoublePQ;
+      let currentNewPQ: IPizzaQuantity;
+      let doublePQ: IPizzaQuantity;
+      let currentNewPizza: Pizza;
+      while (indexNewPQ < addedIPizzaQuantities.length) {
+        currentNewPQ = addedIPizzaQuantities[indexNewPQ];
+        currentNewPizza = new Pizza(currentNewPQ.pizza);
+        indexDoublePQ = indexOf(mappedCart, currentNewPizza);
+        if (indexDoublePQ === -1) {
           // nouvelle pizza
-          console.log(JSON.stringify(currentPizza) + ' is new');
-          cart.push(currentPQ);
+          console.log(JSON.stringify(currentNewPizza) + ' is new');
+          cart.push(currentNewPQ);
         } else {
-          console.log(JSON.stringify(currentPizza) + ' is already there !!!!! ');
-          cart[i] = {
-            pizza: addedPizzasQuantity[i].pizza,
-            quantity: currentPQ.quantity + cart[j].quantity
+          doublePQ = cart[indexDoublePQ];
+          console.log(JSON.stringify(currentNewPizza) + ' is already there !!!!! ');
+          cart[indexDoublePQ] = {
+            pizza: doublePQ.pizza,
+            quantity: currentNewPQ.quantity + doublePQ.quantity
           };
         }
-        i++;
+        indexNewPQ++;
       }
       this.setCart(cart);
       console.log('new cart : ' + JSON.stringify(cart));
