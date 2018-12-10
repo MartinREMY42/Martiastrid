@@ -3,13 +3,19 @@ import {Pizza} from '../../models/IPizza';
 import {AuthenticationService} from '../../services/authentication.service';
 import {IPizzaQuantity} from '../../models/IPizzaQuantity';
 import {indexOf} from '../../utils/list-util';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
-  constructor(private authenticationService: AuthenticationService) {
+  getCartUrl = 'http://localhost:8082/martiastrid/api/cart/getUserCart';
+  addToCartUrl = 'http://localhost:8082/martiastrid/api/pizzas/addToCart';
+
+  constructor(private authenticationService: AuthenticationService,
+              private http: HttpClient) {
   }
 
   getCart(): IPizzaQuantity[] {
@@ -21,13 +27,25 @@ export class CartService {
     localStorage.setItem('pizzaCart', JSON.stringify(cart));
   }
 
+  getCartFromApi(): Observable<IPizzaQuantity[]> {
+    return this.http.get<IPizzaQuantity[]>(this.getCartUrl);
+  }
+
   addToCart(addedIPizzaQuantities: IPizzaQuantity[]): IPizzaQuantity[] {
     if (this.authenticationService.isLoggedIn()) {
-      console.log('todo');
-      return null;
+      this.http.get<IPizzaQuantity[]>(this.getCartUrl).subscribe(cart => {
+        console.log('cart before merge in back :: ' + JSON.stringify(cart));
+      });
+      // send the added pizza to the API
+      // retrieve from that same method the merged cart
+      // "persist it" in localStorage
+      this.http.post<IPizzaQuantity[]>(this.addToCartUrl, addedIPizzaQuantities).subscribe(cart => {
+        this.setCart(cart);
+        console.log('new cart merged in back-end : ' + JSON.stringify(cart));
+      });
     } else {
       const cart: IPizzaQuantity[] = this.getCart();
-      const mappedCart: Pizza[] = cart.map( ipq => new Pizza(ipq.pizza));
+      const mappedCart: Pizza[] = cart.map(ipq => new Pizza(ipq.pizza));
       console.log('old cart : ' + JSON.stringify(cart));
       let indexNewPQ = 0;
       let indexDoublePQ;
@@ -57,16 +75,5 @@ export class CartService {
       return cart;
     }
   }
-
-  /*contained(element: IPizzaQuantity, array: IPizzaQuantity[]) {
-    let found = false;
-    let index = 0;
-    let currentPizza: IPizza;
-    while (!found && (index < array.length)) {
-      currentPizza = array[index].pizza;
-      found = new Pizza(currentPizza).equals(new Pizza(element.pizza));
-      index++;
-  }
-}*/
 
 }

@@ -33,8 +33,21 @@ export class StandardPizzasComponent implements OnInit {
   ngOnInit() {
 
     this.route.data.subscribe(
-      data => this.filteredPizzas = data['pizzas']
-    );
+      data => {
+        this.filteredPizzas = data['pizzas'];
+        this.pizzasFavoritesService
+          .getAllPizzasFavorites()
+          .subscribe( favPizzas => {
+            console.log('avant : ' + JSON.stringify(this.filteredPizzas));
+            this.filteredPizzas = this.filteredPizzas.map((ipizza: IPizza) => {
+              // si la pizza filtrée est contenu dans favPizzas
+              const indexPizzaInFav = favPizzas.indexOf(ipizza);
+              ipizza.favorite = (indexPizzaInFav > -1); // favorite si elle est contenue dans favPizzas
+              return ipizza;
+            });
+            console.log('après : ' + JSON.stringify(this.filteredPizzas));
+          });
+    });
     this.categoryService.getAllCategories().subscribe(
       categories => {
         this.allCategories = categories;
@@ -74,7 +87,8 @@ export class StandardPizzasComponent implements OnInit {
   }
 
   switchPizzaFavoriteness(idPizza: number) {
-    this.pizzasFavoritesService.switchPizzaFavoriteness(idPizza).subscribe();
+    this.pizzasFavoritesService.switchPizzaFavoriteness(idPizza);
+    // dont keep this when you merge
   }
 
 }
