@@ -18,6 +18,7 @@ import {ProductsModule} from './products/products.module';
 import {WelcomeComponent} from './welcome/welcome.component';
 import {UserModule} from './user/user.module';
 import {MyJwtInterceptorService} from './interceptors/my-jwt-interceptor.service';
+import {LogoutResolver} from './services/logout-resolver.service';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import {MyJwtInterceptorService} from './interceptors/my-jwt-interceptor.service
         path: '',
         redirectTo: 'welcome',
         pathMatch: 'full'},
+      { path: 'logout', component: WelcomeComponent,  resolve: [LogoutResolver]},
     ]),
     BrowserModule,
     HttpClientModule,

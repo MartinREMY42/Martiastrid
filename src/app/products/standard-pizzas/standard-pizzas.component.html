@@ -68,13 +68,16 @@
             {{pizza.price}}
           </td>
           <td>
-            <div id="favourite_star">
               <a href="#"
                  [routerLink]="[ '/standardPizzas']"
                   (click)="switchPizzaFavoriteness(pizza.id)">
-
-                <i class="fa fa-fw fa-star-o"></i></a>
-            </div>
+                <div *ngIf = 'pizza.favorite === true'>
+                   <i class="fa fa-fw fa-star-o" style="font-size:48px;color:red"></i>
+                </div>
+                <div *ngIf = 'pizza.favorite !== true'>
+                  <i class="fa fa-fw fa-star-o"></i>
+                </div>
+              </a>
           </td>
           <td>
             <div>

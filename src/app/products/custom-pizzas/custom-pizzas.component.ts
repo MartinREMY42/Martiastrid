@@ -21,5 +21,7 @@ export class CustomPizzasComponent implements OnInit {
     this.ingredientService.getAll()
       .subscribe( allIngredients => this.allIngredients = allIngredients);
   }
-
+  llog(message: string) {
+    console.log(message);
+  }
 }

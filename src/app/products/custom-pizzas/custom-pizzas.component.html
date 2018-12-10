@@ -52,6 +52,7 @@
                    [(ngModel)]="ingredientsQuantity[ingredient.id]"
                    [ngModelOptions]="{standalone: true}"
                    value="0" min="0" max="30"
+                   (change)="llog('salut:'+ingredientsQuantity)"
                    style="width: 4em" />
           </td>
         </tr>

@@ -8,7 +8,7 @@ export interface IPizza {
   ingredients: Ingredient[];
   custom: boolean;
   favorite: boolean;
-  category: string[];
+  category: string;
 }
 
 export class Pizza {
