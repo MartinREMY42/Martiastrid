@@ -18,14 +18,18 @@ export class CartService {
   decrementUrl = this.api + 'cart/decrement';
   removeUrl = this.api + 'cart/remove';
 
-  private cart = new BehaviorSubject(this.getLocalCart());
-  cartObservable = this.cart.asObservable();
+  private cart: BehaviorSubject<IPizzaQuantity[]> = new BehaviorSubject(this.getCart());
+  cartObservable: Observable<IPizzaQuantity[]> = this.cart.asObservable();
 
   constructor(private authenticationService: AuthenticationService,
               private http: HttpClient) {
   }
 
-  private getLocalCart(): IPizzaQuantity[] {
+  private getCart(): IPizzaQuantity[] {
+    if (this.authenticationService.isLoggedIn()) {
+      // l'utilisateur est connecté
+      this.getCartFromApi().subscribe(ipqs => this.setLocalCart(ipqs));
+    }
     const cart = JSON.parse(localStorage.getItem('pizzaCart'));
     return (cart == null) ? [] : cart;
   }
@@ -35,25 +39,8 @@ export class CartService {
     this.cart.next(cart);
   }
 
-  getCartFromApi(): Observable<IPizzaQuantity[]> {
-    return this.http.get<IPizzaQuantity[]>(this.getCartUrl);
-  }
-
-  addToCart(addedIPizzaQuantities: IPizzaQuantity[]) {
-    if (this.authenticationService.isLoggedIn()) {
-      // send the added pizza to the API
-      // retrieve from that same method the merged cart
-      // "persist it" in localStorage
-      this.http.post<IPizzaQuantity[]>(this.addToCartUrl, addedIPizzaQuantities).subscribe(cart => {
-        this.setLocalCart(cart);
-      });
-    } else {
-      this.addAllPizzaLocally(addedIPizzaQuantities);
-    }
-  }
-
   private addAllPizzaLocally(addedIPizzaQuantities: IPizzaQuantity[]) {
-    let cart: IPizzaQuantity[] = this.getLocalCart();
+    let cart: IPizzaQuantity[] = this.getCart();
     const mappedCart: Pizza[] = cart.map(ipq => new Pizza(ipq.pizza));
     let indexNewPQ = 0;
     let indexDoublePQ; // l'index dans cart de l'eventuel pizza déjà dans le panier (à merger donc)
@@ -83,6 +70,23 @@ export class CartService {
     this.setLocalCart(cart);
   }
 
+  getCartFromApi(): Observable<IPizzaQuantity[]> {
+    return this.http.get<IPizzaQuantity[]>(this.getCartUrl);
+  }
+
+  addToCart(addedIPizzaQuantities: IPizzaQuantity[]) {
+    if (this.authenticationService.isLoggedIn()) {
+      // send the added pizza to the API
+      // retrieve from that same method the merged cart
+      // "persist it" in localStorage
+      this.http.post<IPizzaQuantity[]>(this.addToCartUrl, addedIPizzaQuantities).subscribe(cart => {
+        this.setLocalCart(cart);
+      });
+    } else {
+      this.addAllPizzaLocally(addedIPizzaQuantities);
+    }
+  }
+
   remove(pizza: IPizza) {
     if (this.authenticationService.isLoggedIn()) {
       this.http.post<IPizzaQuantity[]>(this.removeUrl, pizza).subscribe(cart => {
@@ -90,9 +94,9 @@ export class CartService {
         this.setLocalCart(cart);
       });
     } else {
-      let cart: IPizzaQuantity[] = this.getLocalCart();
+      let cart: IPizzaQuantity[] = this.getCart();
       const pizzifiedIPizza: Pizza = new Pizza(pizza);
-      cart = cart.filter( ipq => {
+      cart = cart.filter(ipq => {
         const pizzifiedIPQ: Pizza = new Pizza(ipq.pizza);
         return !pizzifiedIPizza.equals(pizzifiedIPQ);
       });
@@ -127,4 +131,5 @@ export class CartService {
       }]);
     }
   }
+
 }
