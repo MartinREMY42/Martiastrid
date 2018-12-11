@@ -58,15 +58,4 @@ export class CartService {
     }
   }
 
-  /*contained(element: IPizzaQuantity, array: IPizzaQuantity[]) {
-    let found = false;
-    let index = 0;
-    let currentPizza: IPizza;
-    while (!found && (index < array.length)) {
-      currentPizza = array[index].pizza;
-      found = new Pizza(currentPizza).equals(new Pizza(element.pizza));
-      index++;
-  }
-}*/
-
 }
