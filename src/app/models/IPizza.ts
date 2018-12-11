@@ -7,6 +7,7 @@ export interface IPizza {
   price: number;
   ingredients: Ingredient[];
   custom: boolean;
+  favorite: boolean;
   category: string[];
 }
 

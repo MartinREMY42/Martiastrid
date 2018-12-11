@@ -10,7 +10,6 @@ import {AppComponent} from './app.component';
 import {PayComponent} from './components/pay/pay.component';
 import {SuccessPaymentComponent} from './components/success-payment/success-payment.component';
 import {AccessDeniedComponent} from './components/access-denied/access-denied.component';
-import {CartComponent} from './components/cart/cart.component';
 import {ErrorComponent} from './components/error/error.component';
 import {CancelPaymentComponent} from './components/cancel-payment/cancel-payment.component';
 import {NavBarComponent} from './nav-bar/nav-bar.component';
@@ -24,7 +23,6 @@ import {MyJwtInterceptorService} from './interceptors/my-jwt-interceptor.service
     AppComponent,
     AccessDeniedComponent,
     CancelPaymentComponent,
-    CartComponent,
     ErrorComponent,
     PayComponent,
     SuccessPaymentComponent,

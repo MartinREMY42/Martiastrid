@@ -8,7 +8,7 @@ import {IPizza} from '../models/IPizza';
 })
 export class PizzasFavoritesService {
 
-  //
+
   url = 'http://localhost:8082/martiastrid/api/pizzasFavorite';
 
   constructor(private http: HttpClient) { }
@@ -16,4 +16,11 @@ export class PizzasFavoritesService {
   getAllPizzasFavorites(): Observable<IPizza[]> {
     return this.http.get<IPizza[]>(this.url);
   }
+
+  switchPizzaFavoriteness(idPizza: number): Observable<IPizza[]> {
+    const updateUrl = `${this.url}/${idPizza}`;
+    console.log(updateUrl);
+    return this.http.get<IPizza[]>(updateUrl);
+  }
+
 }

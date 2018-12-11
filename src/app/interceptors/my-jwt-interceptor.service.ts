@@ -1,16 +1,15 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
 @Injectable()
-export class MyJwtInterceptorService implements  HttpInterceptor {
+export class MyJwtInterceptorService implements HttpInterceptor {
 
-  constructor() { }
+  constructor() {
+  }
 
-  intercept(
-    request: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
+  intercept(request: HttpRequest<any>,
+            next: HttpHandler): Observable<HttpEvent<any>> {
     // add authorization header with jwt token if available
     console.log('###########  ICI L INTERCEPTEUR ####################');
     const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));

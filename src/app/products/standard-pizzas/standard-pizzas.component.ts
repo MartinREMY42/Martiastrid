@@ -17,7 +17,6 @@ export class StandardPizzasComponent implements OnInit {
 
   allCategories: ICategory[];
   filteredPizzas: IPizza[];
-  pizzas: IPizza[] = [];
 
   errorMessage;
   orderedPizzas: number[] = [0, 0, 0, 0];
@@ -27,24 +26,28 @@ export class StandardPizzasComponent implements OnInit {
               private login: AuthenticationService,
               private pizzaService: PizzaService,
               private categoryService: CategoryService,
-              private  pizzasFavorites: PizzasFavoritesService,
+              private  pizzasFavoritesService: PizzasFavoritesService,
               private cartService: CartService) {
   }
 
   ngOnInit() {
-    /* this.pizzaService.getAllPizzas().subscribe(
-      allPizzas => {
-        // this.allPizzas = this.allPizzasMock;
-        this.allPizzas = allPizzas;
-      },
-      error => {
-        this.errorMessage = <any>error;
-      }
-    ); */
 
     this.route.data.subscribe(
-      data => this.filteredPizzas = data['pizzas']
-    );
+      data => {
+        this.filteredPizzas = data['pizzas'];
+        this.pizzasFavoritesService
+          .getAllPizzasFavorites()
+          .subscribe( favPizzas => {
+            console.log('avant : ' + JSON.stringify(this.filteredPizzas));
+            this.filteredPizzas = this.filteredPizzas.map((ipizza: IPizza) => {
+              // si la pizza filtrée est contenu dans favPizzas
+              const indexPizzaInFav = favPizzas.indexOf(ipizza);
+              ipizza.favorite = (indexPizzaInFav > -1); // favorite si elle est contenue dans favPizzas
+              return ipizza;
+            });
+            console.log('après : ' + JSON.stringify(this.filteredPizzas));
+          });
+    });
     this.categoryService.getAllCategories().subscribe(
       categories => {
         this.allCategories = categories;
@@ -81,6 +84,11 @@ export class StandardPizzasComponent implements OnInit {
       });
       */
     this.cartService.addToCart(requestedPizzas);
+  }
+
+  switchPizzaFavoriteness(idPizza: number) {
+    this.pizzasFavoritesService.switchPizzaFavoriteness(idPizza);
+    // dont keep this when you merge
   }
 
 }

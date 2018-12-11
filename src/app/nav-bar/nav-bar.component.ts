@@ -9,6 +9,7 @@ import {MenuItem} from 'primeng/api';
 export class NavBarComponent implements OnInit {
 
   items: MenuItem[];
+  userName: string;
 
   constructor() { }
 
@@ -27,6 +28,7 @@ export class NavBarComponent implements OnInit {
         routerLink: '/customPizzas'
       }
     ];
+
   }
 
 }
