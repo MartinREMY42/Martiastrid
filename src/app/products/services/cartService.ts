@@ -4,8 +4,7 @@ import {AuthenticationService} from '../../services/authentication.service';
 import {IPizzaQuantity} from '../../models/IPizzaQuantity';
 import {indexOf} from '../../utils/list-util';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import index from '@angular/cli/lib/cli';
+import {BehaviorSubject, Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,17 +18,21 @@ export class CartService {
   decrementUrl = this.api + 'cart/decrement';
   removeUrl = this.api + 'cart/remove';
 
+  private cart = new BehaviorSubject(this.getLocalCart());
+  cartObservable = this.cart.asObservable();
+
   constructor(private authenticationService: AuthenticationService,
               private http: HttpClient) {
   }
 
-  getLocalCart(): IPizzaQuantity[] {
+  private getLocalCart(): IPizzaQuantity[] {
     const cart = JSON.parse(localStorage.getItem('pizzaCart'));
     return (cart == null) ? [] : cart;
   }
 
-  setLocalCart(cart: IPizzaQuantity[]) {
+  private setLocalCart(cart: IPizzaQuantity[]) {
     localStorage.setItem('pizzaCart', JSON.stringify(cart));
+    this.cart.next(cart);
   }
 
   getCartFromApi(): Observable<IPizzaQuantity[]> {

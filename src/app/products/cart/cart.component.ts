@@ -15,7 +15,12 @@ export class CartComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.cart = this.cartService.getLocalCart();
+    this.cartService.cartObservable.subscribe( ipqs =>
+      this.onCartUpdate(ipqs));
+  }
+
+  onCartUpdate(ipqs: IPizzaQuantity[]) {
+    this.cart = ipqs;
   }
 
   increment(indexPizza: number) {
