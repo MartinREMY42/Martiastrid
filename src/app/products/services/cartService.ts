@@ -5,6 +5,7 @@ import {IPizzaQuantity} from '../../models/IPizzaQuantity';
 import {indexOf} from '../../utils/list-util';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import index from '@angular/cli/lib/cli';
 
 @Injectable({
   providedIn: 'root'
@@ -49,11 +50,10 @@ export class CartService {
   }
 
   private addAllPizzaLocally(addedIPizzaQuantities: IPizzaQuantity[]) {
-    const cart: IPizzaQuantity[] = this.getLocalCart();
+    let cart: IPizzaQuantity[] = this.getLocalCart();
     const mappedCart: Pizza[] = cart.map(ipq => new Pizza(ipq.pizza));
-    console.log('old cart : ' + JSON.stringify(cart));
     let indexNewPQ = 0;
-    let indexDoublePQ;
+    let indexDoublePQ; // l'index dans cart de l'eventuel pizza déjà dans le panier (à merger donc)
     let currentNewPQ: IPizzaQuantity;
     let doublePQ: IPizzaQuantity;
     let currentNewPizza: Pizza;
@@ -65,10 +65,15 @@ export class CartService {
         cart.push(currentNewPQ);
       } else {
         doublePQ = cart[indexDoublePQ];
-        cart[indexDoublePQ] = {
-          pizza: doublePQ.pizza,
-          quantity: currentNewPQ.quantity + doublePQ.quantity
-        };
+        const newQuantity = currentNewPQ.quantity + doublePQ.quantity;
+        if (newQuantity > 0) {
+          cart[indexDoublePQ] = {
+            pizza: doublePQ.pizza,
+            quantity: newQuantity
+          };
+        } else {
+          cart = cart.slice(indexDoublePQ, 1);
+        }
       }
       indexNewPQ++;
     }
@@ -78,6 +83,7 @@ export class CartService {
   remove(pizza: IPizza) {
     if (this.authenticationService.isLoggedIn()) {
       this.http.post<IPizzaQuantity[]>(this.removeUrl, pizza).subscribe(cart => {
+        console.log('removed cart : ' + JSON.stringify(cart));
         this.setLocalCart(cart);
       });
     } else {
@@ -94,6 +100,7 @@ export class CartService {
   increment(pizza: IPizza) {
     if (this.authenticationService.isLoggedIn()) {
       this.http.post<IPizzaQuantity[]>(this.incrementUrl, pizza).subscribe(cart => {
+        console.log('incremented cart : ' + JSON.stringify(cart));
         this.setLocalCart(cart);
       });
     } else {
@@ -107,6 +114,7 @@ export class CartService {
   decrement(pizza: IPizza) {
     if (this.authenticationService.isLoggedIn()) {
       this.http.post<IPizzaQuantity[]>(this.decrementUrl, pizza).subscribe(cart => {
+        console.log('decremented cart : ' + JSON.stringify(cart));
         this.setLocalCart(cart);
       });
     } else {
