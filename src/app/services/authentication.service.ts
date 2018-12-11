@@ -1,17 +1,20 @@
-import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {map} from 'rxjs/operators';
+import {JwtHelperService} from '@auth0/angular-jwt';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
+
   url_authentication = 'http://localhost:8082/martiastrid/api/token/generate-token';
 
-  login(username: string, password: string) {
-    return this.http.post<any>(this.url_authentication, { username: username, password: password })
+  login(username: string, password: string): Observable<void> {
+    return this.http.post<any>(this.url_authentication, {username: username, password: password})
       .pipe(map((res: any) => {
         // login successful if there's a jwt token in the response
         if (res && res.token) {
@@ -21,6 +24,7 @@ export class AuthenticationService {
         }
       }));
   }
+
   // commitons avec mon nom
   logout() {
     // remove user from local storage to log user out
@@ -28,7 +32,7 @@ export class AuthenticationService {
   }
 
   isLoggedIn(): boolean {
-    return ( sessionStorage.getItem('currentUser')) ? true : false;
+    return (sessionStorage.getItem('currentUser')) ? true : false;
   }
 
   getJwtSubjet(): string {

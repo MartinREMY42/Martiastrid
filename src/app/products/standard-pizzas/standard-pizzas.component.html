@@ -73,12 +73,10 @@
           </td>
           <td>
             <div id="favourite_star">
-              <a href="#"
-                 [routerLink]="[ '/standardPizzas']"
-                 (click)="switchPizzaFavoriteness(pizza.id)">
-
-                <i class="fa fa-fw fa-star-o"></i></a>
-              {{ pizza.favorite ? 'jkiff' : 'josef' }}
+              <a (click)="switchPizzaFavoriteness(pizza.id)">
+                <i *ngIf="pizza.favorite" class="fa fa-fw fa-star" style="font-size:35px;color:red"></i>
+                <i *ngIf="!pizza.favorite" class="fa fa-fw fa-star" style="font-size:35px;color:grey"></i>
+              </a>
             </div>
           </td>
           <td>

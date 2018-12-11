@@ -5,7 +5,6 @@ import {IPizza} from '../../models/IPizza';
 import {PizzaService} from '../services/pizzaService';
 import {CategoryService} from '../services/categoryService';
 import {CartService} from '../services/cartService';
-import {PizzasFavoritesService} from '../../services/pizzas-favorites.service';
 import {AuthenticationService} from '../../services/authentication.service';
 
 @Component({
@@ -26,34 +25,14 @@ export class StandardPizzasComponent implements OnInit {
               private login: AuthenticationService,
               private pizzaService: PizzaService,
               private categoryService: CategoryService,
-              private pizzasFavoritesService: PizzasFavoritesService,
               private cartService: CartService) {
   }
 
   ngOnInit() {
 
-    /* this.route.data.subscribe(
-      data => {
-        this.filteredPizzas = data['pizzas'];
-        this.pizzasFavoritesService
-          .getAllPizzasFavorites()
-          .subscribe( favPizzas => {
-            console.log('avant : ' + JSON.stringify(this.filteredPizzas));
-            this.filteredPizzas = this.filteredPizzas.map((ipizza: IPizza) => {
-              // si la pizza filtrée est contenu dans favPizzas
-              const indexPizzaInFav = favPizzas.indexOf(ipizza);
-              ipizza.favorite = (indexPizzaInFav > -1); // favorite si elle est contenue dans favPizzas
-              return ipizza;
-            });
-            console.log('après : ' + JSON.stringify(this.filteredPizzas));
-          });
-    }); */
     this.categoryService.getAllCategories().subscribe(
-      categories => {
-        this.allCategories = categories;
-      },
-      error => this.errorMessage = <any>error
-    );
+      categories => this.allCategories = categories,
+      error => this.errorMessage = <any>error);
 
     this.pizzaService.filterPizzasObservable.subscribe( iPizzas => this.onFilterUpdate(iPizzas));
   }
@@ -62,7 +41,6 @@ export class StandardPizzasComponent implements OnInit {
     this.filteredPizzas = iPizzas;
     this.orderedPizzas = [];
     this.filteredPizzas.forEach(p => this.orderedPizzas.push(0));
-    console.log(this.filteredPizzas.length + ' : ' + JSON.stringify(this.orderedPizzas));
   }
 
   isLoggingIn(): boolean {
@@ -96,8 +74,7 @@ export class StandardPizzasComponent implements OnInit {
   }
 
   switchPizzaFavoriteness(idPizza: number) {
-    this.pizzasFavoritesService.switchPizzaFavoriteness(idPizza);
-    // dont keep this when you merge
+    this.pizzaService.switchPizzaFavoriteness(idPizza);
   }
 
   setFilter(filter: string) {

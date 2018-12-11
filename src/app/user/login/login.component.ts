@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../../services/authentication.service';
 import {first} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
+import {PizzaService} from '../../products/services/pizzaService';
 
 @Component({
   selector: 'app-login-component',
@@ -19,6 +20,7 @@ export class LoginComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private authenticationService: AuthenticationService,
               private route: ActivatedRoute,
+              private pizzaService: PizzaService,
               private router: Router) {
   }
 
@@ -46,18 +48,17 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    this.authenticationService.login(
-      this.loginForm.get('username').value,
-      this.loginForm.get('password').value)
+    this.authenticationService
+      .login(
+        this.loginForm.get('username').value,
+        this.loginForm.get('password').value)
       .pipe(first())
       .subscribe(
         data => {
-          console.log('go to standard pizzas');
+          this.pizzaService.chargeFavoritePizzas();
           this.router.navigate(['/standardPizzas']);
         },
-        error => {
-          this.errorMessage = JSON.stringify(error);
-        });
+        error => this.errorMessage = JSON.stringify(error));
   }
 
 }
