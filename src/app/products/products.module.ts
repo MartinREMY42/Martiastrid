@@ -5,7 +5,9 @@ import {StandardPizzasComponent} from './standard-pizzas/standard-pizzas.compone
 import {StandardPizzasResolverService} from './services/standard-pizzas-resolver.service';
 import {CustomPizzasComponent} from './custom-pizzas/custom-pizzas.component';
 import {FormsModule} from '@angular/forms';
-import { PizzaFavoriteSwitchComponent } from './pizza-favorite-switch/pizza-favorite-switch.component';
+import {PizzaFavoriteSwitchComponent} from './pizza-favorite-switch/pizza-favorite-switch.component';
+import {CartComponent} from './cart/cart.component';
+
 const routes: Routes = [
   {
     path: 'standardPizzas',
@@ -24,6 +26,10 @@ const routes: Routes = [
   {
     path: 'customPizzas',
     component: CustomPizzasComponent
+  },
+  {
+    path: 'cart',
+    component: CartComponent
   }
 ];
 
@@ -31,6 +37,7 @@ const routes: Routes = [
   declarations: [
     StandardPizzasComponent,
     CustomPizzasComponent,
+    CartComponent,
     PizzaFavoriteSwitchComponent
   ],
   imports: [
@@ -39,4 +46,5 @@ const routes: Routes = [
     FormsModule
   ]
 })
-export class ProductsModule {  }
+export class ProductsModule {
+}

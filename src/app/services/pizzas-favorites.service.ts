@@ -22,4 +22,5 @@ export class PizzasFavoritesService {
     console.log(updateUrl);
     return this.http.get<IPizza[]>(updateUrl);
   }
+
 }
