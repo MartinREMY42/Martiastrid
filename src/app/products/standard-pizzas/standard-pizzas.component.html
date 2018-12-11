@@ -15,16 +15,20 @@
 
 <div class="col-lg-2 col-md-2 col-sm-12">
   <div class="list-group">
-    <a href="#" [routerLink]="[ '/standardPizzas']" class="list-group-item list-group-item-action active">
+    <a class="list-group-item list-group-item-action active"
+       (click)="setFilter('')">
       Toutes
     </a>
-    <div *ngIf = "isLoggingIn()">
-      <a href="#" [routerLink]="[ '/standardPizzas','favorite']" class="list-group-item list-group-item-action active">
-        Favorites
-      </a>
-    </div>
-    <a href="#" *ngFor='let category of allCategories' [routerLink]="[ '/standardPizzas', category]"
-        class="list-group-item list-group-item-action">{{category}}</a>
+    <a *ngIf = "isLoggingIn()"
+       class="list-group-item list-group-item-action"
+       (click)="setFilter('favorite')">
+      Favorites
+    </a>
+    <a *ngFor="let category of allCategories"
+       class="list-group-item list-group-item-action"
+      (click)="setFilter(category)">
+      {{category}}
+    </a>
   </div>
 </div>
 
@@ -71,7 +75,7 @@
             <div id="favourite_star">
               <a href="#"
                  [routerLink]="[ '/standardPizzas']"
-                  (click)="switchPizzaFavoriteness(pizza.id)">
+                 (click)="switchPizzaFavoriteness(pizza.id)">
 
                 <i class="fa fa-fw fa-star-o"></i></a>
               {{ pizza.favorite ? 'jkiff' : 'josef' }}
@@ -106,10 +110,4 @@
     </div>
   </form>
 </div>
-
-<script>
-  $(".favourite_icon").click(function(){
-    $(this).css({"color": "yellow"}).removeClass('fa-star-o').addClass('fa-star');
-  });
-</script>
 

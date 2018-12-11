@@ -1,7 +1,9 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {IPizza} from '../../models/IPizza';
+import {IPizzaQuantity} from '../../models/IPizzaQuantity';
+import {indexOf} from '../../utils/list-util';
 
 @Injectable({
   providedIn: 'root'
@@ -10,21 +12,40 @@ export class PizzaService {
 
   pizzaURL = 'http://localhost:8082/martiastrid/api/pizzas';
 
+  private allPizzas: IPizza[] = [];
+  private filteredPizzas: BehaviorSubject<IPizza[]> = new BehaviorSubject([]);
+  filterPizzasObservable: Observable<IPizza[]> = this.filteredPizzas.asObservable();
+
   constructor(private http: HttpClient) {
+    this.getAllPizzas().subscribe( pizzas => {
+      this.allPizzas = pizzas;
+      console.log('toutes les pizzaname et pizzacategory ' + JSON.stringify(pizzas.map( iPizza => {
+        return {'p' : iPizza.genericName, 'c' : iPizza.category};
+      })));
+      this.setFilter('');
+    });
   }
 
-  getAllPizzas(): Observable<IPizza[]> {
+  private getAllPizzas(): Observable<IPizza[]> {
     return this.http.get<IPizza[]>(this.pizzaURL);
   }
 
-  getPizzasByCategory(category: string): Observable<IPizza[]> {
-
-    const updateUrl = `${this.pizzaURL}/${category}`;
-    return this.http.get<IPizza[]>(updateUrl);
+  setFilter(filter: string) {
+    if (filter === '') {
+      this.filteredPizzas.next(this.allPizzas);
+    } else if (filter === 'favorite') {
+      this.filteredPizzas.next(this.allPizzas); // fuck you i'll do it later
+    } else {
+      // category filter
+      const categorisedPizza: IPizza[] = this.getCategorisedPizza(filter);
+      this.filteredPizzas.next(categorisedPizza);
+    }
   }
 
-  addToCart(requestedPizza: {'pizza': IPizza; 'quantity': number}[]): Observable<{'pizza': IPizza; 'quantity': number}[]> {
-    const addUrl = this.pizzaURL + '/addToCart';
-    return this.http.post<{'pizza': IPizza; 'quantity': number}[]>(addUrl, requestedPizza);
+  private getCategorisedPizza(category: string) {
+    const categorisedPizza: IPizza[] = this.allPizzas
+      .filter( iPizza => iPizza.category.includes(category));
+    return categorisedPizza;
   }
+
 }

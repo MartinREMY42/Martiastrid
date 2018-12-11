@@ -26,13 +26,13 @@ export class StandardPizzasComponent implements OnInit {
               private login: AuthenticationService,
               private pizzaService: PizzaService,
               private categoryService: CategoryService,
-              private  pizzasFavoritesService: PizzasFavoritesService,
+              private pizzasFavoritesService: PizzasFavoritesService,
               private cartService: CartService) {
   }
 
   ngOnInit() {
 
-    this.route.data.subscribe(
+    /* this.route.data.subscribe(
       data => {
         this.filteredPizzas = data['pizzas'];
         this.pizzasFavoritesService
@@ -47,13 +47,22 @@ export class StandardPizzasComponent implements OnInit {
             });
             console.log('après : ' + JSON.stringify(this.filteredPizzas));
           });
-    });
+    }); */
     this.categoryService.getAllCategories().subscribe(
       categories => {
         this.allCategories = categories;
       },
       error => this.errorMessage = <any>error
     );
+
+    this.pizzaService.filterPizzasObservable.subscribe( iPizzas => this.onFilterUpdate(iPizzas));
+  }
+
+  onFilterUpdate(iPizzas: IPizza[]) {
+    this.filteredPizzas = iPizzas;
+    this.orderedPizzas = [];
+    this.filteredPizzas.forEach(p => this.orderedPizzas.push(0));
+    console.log(this.filteredPizzas.length + ' : ' + JSON.stringify(this.orderedPizzas));
   }
 
   isLoggingIn(): boolean {
@@ -91,4 +100,7 @@ export class StandardPizzasComponent implements OnInit {
     // dont keep this when you merge
   }
 
+  setFilter(filter: string) {
+    this.pizzaService.setFilter(filter);
+  }
 }
