@@ -4,6 +4,7 @@ import {IngredientService} from '../services/ingredientService';
 import {CustomPizzaService} from '../services/CustomPizzaService';
 import {Recipe} from '../../models/Recipe';
 import {RecipesQuantity} from '../../models/RecipesQuantity';
+import {PizzaPartyService} from '../services/pizzaPartyService';
 
 @Component({
   selector: 'app-party',
@@ -17,7 +18,7 @@ export class PartyComponent implements OnInit {
   quantityWanted = 1;
 
   constructor(private ingredientService: IngredientService,
-              private customPizzaService: CustomPizzaService) { }
+              private pizzaPartyService: PizzaPartyService) { }
 
   ngOnInit() {
     this.ingredientService.getAll()
@@ -46,7 +47,7 @@ export class PartyComponent implements OnInit {
       i++;
     }
     const recipeQuantity: RecipesQuantity = {recipes: recipes, quantity: this.quantityWanted};
-    this.customPizzaService.addToCart(recipeQuantity);
+    this.pizzaPartyService.addToCart(recipeQuantity);
   }
 
 }
