@@ -4,8 +4,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {StandardPizzasComponent} from './standard-pizzas/standard-pizzas.component';
 import {CustomPizzasComponent} from './custom-pizzas/custom-pizzas.component';
 import {FormsModule} from '@angular/forms';
-import {PizzaFavoriteSwitchComponent} from './pizza-favorite-switch/pizza-favorite-switch.component';
 import {CartComponent} from './cart/cart.component';
+import { PartyComponent } from './party/party.component';
 
 const routes: Routes = [
   {
@@ -17,12 +17,12 @@ const routes: Routes = [
     component: StandardPizzasComponent
   },
   {
-    path: 'addPizzaFavorite/:idPizza',
-    component: PizzaFavoriteSwitchComponent
-  },
-  {
     path: 'customPizzas',
     component: CustomPizzasComponent
+  },
+  {
+    path: 'partyPizzas',
+    component: PartyComponent
   },
   {
     path: 'cart',
@@ -35,7 +35,7 @@ const routes: Routes = [
     StandardPizzasComponent,
     CustomPizzasComponent,
     CartComponent,
-    PizzaFavoriteSwitchComponent
+    PartyComponent
   ],
   imports: [
     CommonModule,

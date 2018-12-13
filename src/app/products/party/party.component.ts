@@ -1,19 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import {Ingredient} from '../../models/Ingredient';
 import {IngredientService} from '../services/ingredientService';
-import {Pizza} from '../../models/Pizza';
-import {CartService} from '../services/cartService';
+import {CustomPizzaService} from '../services/CustomPizzaService';
 import {Recipe} from '../../models/Recipe';
 import {RecipesQuantity} from '../../models/RecipesQuantity';
-import {PizzaQuantity} from '../../models/PizzaQuantity';
-import {CustomPizzaService} from '../services/CustomPizzaService';
 
 @Component({
-  selector: 'app-custom-pizzas',
-  templateUrl: './custom-pizzas.component.html',
-  styleUrls: ['./custom-pizzas.component.css']
+  selector: 'app-party',
+  templateUrl: './party.component.html',
+  styleUrls: ['./party.component.css']
 })
-export class CustomPizzasComponent implements OnInit {
+export class PartyComponent implements OnInit {
 
   allIngredients: Ingredient[];
   orderedIngredients: number[];
@@ -23,7 +20,7 @@ export class CustomPizzasComponent implements OnInit {
               private customPizzaService: CustomPizzaService) { }
 
   ngOnInit() {
-    this.ingredientService.getExceptPattes()
+    this.ingredientService.getAll()
       .subscribe( allIngredients => {
         this.allIngredients = allIngredients;
         this.orderedIngredients = [];
@@ -31,7 +28,7 @@ export class CustomPizzasComponent implements OnInit {
       });
   }
 
-  makeCustom() {
+  makeParty() {
     const recipes: Recipe[] = [];
     let i = 0;
     let qttyIngredientI: number;

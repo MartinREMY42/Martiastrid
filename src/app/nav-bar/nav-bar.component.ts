@@ -28,6 +28,10 @@ export class NavBarComponent implements OnInit {
         routerLink: '/customPizzas'
       },
       {
+        label: 'Party Pizza',
+        routerLink: '/partyPizzas'
+      },
+      {
         label: 'Cart',
         routerLink: '/cart'
       }

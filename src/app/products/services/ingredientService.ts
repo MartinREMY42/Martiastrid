@@ -8,11 +8,15 @@ import {Ingredient} from '../../models/Ingredient';
   providedIn: 'root'
 })
 export class IngredientService {
-  url = 'http://localhost:8082/martiastrid/api/ingredients';
+  url = 'http://localhost:8082/martiastrid/api/ingredients/all';
 
   constructor(private http: HttpClient) {}
 
   getAll(): Observable<Ingredient[]> {
     return this.http.get<Ingredient[]>(this.url);
+  }
+
+  getExceptPattes(): Observable<Ingredient[]> {
+    return this .http.get<Ingredient[]>('http://localhost:8082/martiastrid/api/ingredients/exceptPatte');
   }
 }
