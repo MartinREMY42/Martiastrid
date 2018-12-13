@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {IPizza} from '../models/IPizza';
+import {Pizza} from '../models/Pizza';
 
 @Injectable({
   providedIn: 'root'
@@ -13,14 +13,14 @@ export class PizzasFavoritesService {
 
   constructor(private http: HttpClient) { }
 
-  getAllPizzasFavorites(): Observable<IPizza[]> {
-    return this.http.get<IPizza[]>(this.url);
+  getAllPizzasFavorites(): Observable<Pizza[]> {
+    return this.http.get<Pizza[]>(this.url);
   }
 
-  switchPizzaFavoriteness(idPizza: number): Observable<IPizza[]> {
+  switchPizzaFavoriteness(idPizza: number): Observable<Pizza[]> {
     const updateUrl = `${this.url}/${idPizza}`;
     console.log(updateUrl);
-    return this.http.get<IPizza[]>(updateUrl);
+    return this.http.get<Pizza[]>(updateUrl);
   }
 
 }

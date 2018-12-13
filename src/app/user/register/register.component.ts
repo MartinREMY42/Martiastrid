@@ -6,7 +6,7 @@ import {MustMatch} from '../../utils/must-match.validator';
 import {CorrectDate} from '../../utils/correct-date.validator';
 import {RegisterService} from '../../services/register.service';
 import {first} from 'rxjs/operators';
-import {IUser} from '../../models/IUser';
+import {User} from '../../models/User';
 import {Router} from '@angular/router';
 
 @Component({
@@ -54,7 +54,7 @@ export class RegisterComponent implements OnInit {
     console.log(date_string + ' stringified json');
     const date_date: Date = new Date(date_string);
     console.log(date_date + ' date');
-    const user: IUser = {
+    const user: User = {
       username: <string>this.registerForm.get('username').value,
       password: <string>this.registerForm.get('password').value,
       enabled: true,

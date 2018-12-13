@@ -8,6 +8,7 @@ import {Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class AuthenticationService {
+
   constructor(private http: HttpClient) {
   }
 
@@ -25,14 +26,13 @@ export class AuthenticationService {
       }));
   }
 
-  // commitons avec mon nom
   logout() {
     // remove user from local storage to log user out
     sessionStorage.removeItem('currentUser');
   }
 
   isLoggedIn(): boolean {
-    return (sessionStorage.getItem('currentUser')) ? true : false;
+    return (sessionStorage.getItem('currentUser'));
   }
 
   getJwtSubjet(): string {

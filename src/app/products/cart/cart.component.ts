@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {IPizzaQuantity} from '../../models/IPizzaQuantity';
+import {PizzaQuantity} from '../../models/PizzaQuantity';
 import {CartService} from '../services/cartService';
 
 @Component({
@@ -9,17 +9,16 @@ import {CartService} from '../services/cartService';
 })
 export class CartComponent implements OnInit {
 
-  cart: IPizzaQuantity[] = [];
+  cart: PizzaQuantity[] = [];
 
-  constructor(private cartService: CartService) {
-  }
+  constructor(private cartService: CartService) {}
 
   ngOnInit() {
     this.cartService.cartObservable.subscribe( iPizzaQuantities =>
       this.onCartUpdate(iPizzaQuantities));
   }
 
-  onCartUpdate(iPizzaQuantities: IPizzaQuantity[]) {
+  onCartUpdate(iPizzaQuantities: PizzaQuantity[]) {
     this.cart = iPizzaQuantities;
   }
 

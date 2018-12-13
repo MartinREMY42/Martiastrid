@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ICategory} from '../../models/category';
-import {IPizza} from '../../models/IPizza';
+import {Category} from '../../models/Category';
+import {Pizza} from '../../models/Pizza';
 import {PizzaService} from '../services/pizzaService';
 import {CategoryService} from '../services/categoryService';
 import {CartService} from '../services/cartService';
@@ -14,8 +14,8 @@ import {AuthenticationService} from '../../services/authentication.service';
 })
 export class StandardPizzasComponent implements OnInit {
 
-  allCategories: ICategory[];
-  filteredPizzas: IPizza[];
+  allCategories: Category[];
+  filteredPizzas: Pizza[];
 
   errorMessage;
   orderedPizzas: number[] = [0, 0, 0, 0];
@@ -37,7 +37,7 @@ export class StandardPizzasComponent implements OnInit {
     this.pizzaService.filterPizzasObservable.subscribe( iPizzas => this.onFilterUpdate(iPizzas));
   }
 
-  onFilterUpdate(iPizzas: IPizza[]) {
+  onFilterUpdate(iPizzas: Pizza[]) {
     this.filteredPizzas = iPizzas;
     this.orderedPizzas = [];
     this.filteredPizzas.forEach(p => this.orderedPizzas.push(0));
@@ -48,10 +48,10 @@ export class StandardPizzasComponent implements OnInit {
   }
 
   addPizzas() {
-    const requestedPizzas: { pizza: IPizza; quantity: number }[] = [];
+    const requestedPizzas: { pizza: Pizza; quantity: number }[] = [];
     let i = 0;
     let qttyPizzaI: number;
-    let pizzaI: IPizza;
+    let pizzaI: Pizza;
     while (i < this.orderedPizzas.length) {
       qttyPizzaI = this.orderedPizzas[i];
       if (qttyPizzaI > 0) {
@@ -63,13 +63,6 @@ export class StandardPizzasComponent implements OnInit {
       }
       i++;
     }
-    // console.log(JSON.stringify(requestedPizzas));
-    /* this.pizzaService.addToCart(requestedPizzas).subscribe(
-      confirmedCart => {
-        console.log(confirmedCart);
-        this.cartService.setCart(confirmedCart);
-      });
-      */
     this.cartService.addToCart(requestedPizzas);
   }
 

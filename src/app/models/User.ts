@@ -1,13 +1,13 @@
-import {IAuthority} from './IAuthority';
+import {Authority} from './Authority';
 
-export interface IUser {
+export interface User {
   username: string;
   password: string;
   enabled: boolean;
   nonExpired: boolean;
   nonLocked: boolean;
   credentialsNonExpired: boolean;
-  authorities: IAuthority[];
+  authorities: Authority[];
   birthDate: Date;
   creationDate: Date;
   orders: any[];

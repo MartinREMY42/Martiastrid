@@ -1,8 +1,8 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {IPizza} from '../../models/IPizza';
-import {IPizzaQuantity} from '../../models/IPizzaQuantity';
+import {Pizza} from '../../models/Pizza';
+import {PizzaQuantity} from '../../models/PizzaQuantity';
 import {indexOf} from '../../utils/list-util';
 import {AuthenticationService} from '../../services/authentication.service';
 
@@ -15,10 +15,10 @@ export class PizzaService {
   pizzaURL = this.api + 'pizzas';
   pizzaFavoritenessUrl = this.api + 'pizzasFavorite';
 
-  private allPizzas: IPizza[] = [];
+  private allPizzas: Pizza[] = [];
   private currentFilter = '';
-  private filteredPizzas: BehaviorSubject<IPizza[]> = new BehaviorSubject([]);
-  filterPizzasObservable: Observable<IPizza[]> = this.filteredPizzas.asObservable();
+  private filteredPizzas: BehaviorSubject<Pizza[]> = new BehaviorSubject([]);
+  filterPizzasObservable: Observable<Pizza[]> = this.filteredPizzas.asObservable();
 
   constructor(private authenticationService: AuthenticationService,
               private http: HttpClient) {
@@ -38,11 +38,11 @@ export class PizzaService {
     });
   }
 
-  private getAllPizzas(): Observable<IPizza[]> {
-    return this.http.get<IPizza[]>(this.pizzaURL);
+  private getAllPizzas(): Observable<Pizza[]> {
+    return this.http.get<Pizza[]>(this.pizzaURL);
   }
 
-  updateLocallyFavoritePizzas(favoritePizzas: IPizza[]) {
+  updateLocallyFavoritePizzas(favoritePizzas: Pizza[]) {
     const favoritePizzasId = favoritePizzas.map(ipizza => ipizza.id);
     console.log('those are the favorite : ' + JSON.stringify(favoritePizzasId));
     console.log('update locally pizza favoritness of ' + JSON.stringify(this.allPizzas.map( ipizza => {
@@ -57,15 +57,15 @@ export class PizzaService {
     this.setFilter(this.currentFilter); // nécessaire pour mettre au courant les abonnés
   }
 
-  private getAllFavoritesPizzas(): Observable<IPizza[]> {
-    return this.http.get<IPizza[]>(this.pizzaFavoritenessUrl);
+  private getAllFavoritesPizzas(): Observable<Pizza[]> {
+    return this.http.get<Pizza[]>(this.pizzaFavoritenessUrl);
   }
 
   switchPizzaFavoriteness(idPizza: number) {
     if (this.authenticationService.isLoggedIn()) {
       const updateUrl = `${this.pizzaFavoritenessUrl}/${idPizza}`;
       console.log(updateUrl);
-      return this.http.get<IPizza[]>(updateUrl).subscribe(iPizzas =>
+      return this.http.get<Pizza[]>(updateUrl).subscribe(iPizzas =>
         this.updateLocallyFavoritePizzas(iPizzas));
     }
   }
@@ -75,16 +75,16 @@ export class PizzaService {
     if (filter === '') {
       this.filteredPizzas.next(this.allPizzas);
     } else if (filter === 'favorite') {
-      const favoritePizza: IPizza[] = this.getFavoritesPizzas();
+      const favoritePizza: Pizza[] = this.getFavoritesPizzas();
       this.filteredPizzas.next(favoritePizza);
     } else {
       // category filter
-      const categorisedPizza: IPizza[] = this.getCategorisedPizza(filter);
+      const categorisedPizza: Pizza[] = this.getCategorisedPizza(filter);
       this.filteredPizzas.next(categorisedPizza);
     }
   }
 
-  getFavoritesPizzas(): IPizza[] {
+  getFavoritesPizzas(): Pizza[] {
     if (this.authenticationService.isLoggedIn()) {
       return this.allPizzas.filter(iPizza => iPizza.favorite);
     }
