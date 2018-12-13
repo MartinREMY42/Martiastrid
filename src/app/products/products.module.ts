@@ -5,6 +5,7 @@ import {StandardPizzasComponent} from './standard-pizzas/standard-pizzas.compone
 import {CustomPizzasComponent} from './custom-pizzas/custom-pizzas.component';
 import {FormsModule} from '@angular/forms';
 import {CartComponent} from './cart/cart.component';
+import { PizzaPartyComponent } from './pizza-party/pizza-party.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
   {
     path: 'cart',
     component: CartComponent
+  },
+  {
+    path: 'pizzaParty',
+    component: PizzaPartyComponent
   }
 ];
 
@@ -29,7 +34,8 @@ const routes: Routes = [
   declarations: [
     StandardPizzasComponent,
     CustomPizzasComponent,
-    CartComponent
+    CartComponent,
+    PizzaPartyComponent
   ],
   imports: [
     CommonModule,
