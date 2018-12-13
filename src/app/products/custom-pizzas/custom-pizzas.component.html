@@ -13,10 +13,8 @@
 </p>
 
 <hr/>
-
 <div>
-  <form action="pageContext.request.contextPath/customPizza/add"
-        modelAttribute="chosenIngredients">
+  <form>
     <div class="container">
       <table id="cart" class="table table-hover table-condensed">
         <thead>
@@ -29,7 +27,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let ingredient of allIngredients">
+        <tr *ngFor="let ingredient of allIngredients; index as indexIngredient;">
           <td data-th="Product">
             <div class="row">
               <div class="col-sm-2 hidden-xs">
@@ -49,9 +47,9 @@
           </td>
           <td>
             <input type="number"
-                   [(ngModel)]="ingredientsQuantity[ingredient.id]"
+                   [(ngModel)]="orderedIngredients[indexIngredient]"
                    [ngModelOptions]="{standalone: true}"
-                   value="0" min="0" max="30"
+                   value="0" min="0" max="10"
                    style="width: 4em" />
           </td>
         </tr>
@@ -64,14 +62,21 @@
             </label>
           </td>
           <td align="center">
-            <input path="quantity" size="4" type="number" value="1" min="1" max="30" cssStyle="width: 4em"/>
+            <input type="number"
+                   [(ngModel)]="quantityWanted"
+                   [ngModelOptions]="{standalone: true}"
+                   value="1" min="1" max="30"
+                   style="width: 4em"/>
             <div *ngIf="errorMessageCustomAmout != null"
                  style="color: red">
               {{errorMessageCustomAmount}}
             </div>
           </td>
           <td>
-            <input type="submit" class="btn btn-primary" value="addToCart"/>
+            <input type="submit"
+                   class="btn btn-primary"
+                   value="addToCart"
+                   (click)="makeCustom()"/>
           </td>
         </tr>
         </tfoot>

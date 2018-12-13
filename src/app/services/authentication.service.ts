@@ -32,7 +32,7 @@ export class AuthenticationService {
   }
 
   isLoggedIn(): boolean {
-    return (sessionStorage.getItem('currentUser'));
+    return !!(sessionStorage.getItem('currentUser'));
   }
 
   getJwtSubjet(): string {

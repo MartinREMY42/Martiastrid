@@ -3,6 +3,10 @@ import {Ingredient} from '../../models/Ingredient';
 import {IngredientService} from '../services/ingredientService';
 import {Pizza} from '../../models/Pizza';
 import {CartService} from '../services/cartService';
+import {Recipe} from '../../models/Recipe';
+import {RecipesQuantity} from '../../models/RecipesQuantity';
+import {PizzaQuantity} from '../../models/PizzaQuantity';
+import {CustomPizzaService} from '../services/CustomPizzaService';
 
 @Component({
   selector: 'app-custom-pizzas',
@@ -11,23 +15,24 @@ import {CartService} from '../services/cartService';
 })
 export class CustomPizzasComponent implements OnInit {
 
-  ingredientsQuantity: number[] = [null,
-    0, 0, 0, 0,
-    0, 0, 0, 0,
-    0, 0, 0, 0];
   allIngredients: Ingredient[];
   orderedIngredients: number[];
+  quantityWanted = 1;
 
   constructor(private ingredientService: IngredientService,
-              private cartService: CartService) { }
+              private customPizzaService: CustomPizzaService) { }
 
   ngOnInit() {
     this.ingredientService.getAll()
-      .subscribe( allIngredients => this.allIngredients = allIngredients);
+      .subscribe( allIngredients => {
+        this.allIngredients = allIngredients;
+        this.orderedIngredients = [];
+        this.allIngredients.forEach(p => this.orderedIngredients.push(0));
+      });
   }
 
   makeCustom() {
-    const ingredientQuantities: {ingredient: Ingredient; quantity: number }[] = [];
+    const recipes: Recipe[] = [];
     let i = 0;
     let qttyIngredientI: number;
     let ingredientI: Ingredient;
@@ -35,14 +40,16 @@ export class CustomPizzasComponent implements OnInit {
       qttyIngredientI = this.orderedIngredients[i];
       if (qttyIngredientI > 0) {
         ingredientI = this.allIngredients[i];
-        ingredientQuantities.push({
+        recipes.push({
+          id: null,
           ingredient: ingredientI,
           quantity: qttyIngredientI
         });
       }
       i++;
     }
-    this.cartService.addToCart([{pizza: pizzaCustom, quantity: quantity}]);
+    const recipeQuantity: RecipesQuantity = {recipes: recipes, quantity: this.quantityWanted};
+    this.customPizzaService.addToCart(recipeQuantity);
   }
 
 }

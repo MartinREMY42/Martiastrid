@@ -11,25 +11,24 @@ import {BehaviorSubject, Observable} from 'rxjs';
 })
 export class CartService {
 
-  api = 'http://localhost:8082/martiastrid/api/';
-  removeUrl = this.api + 'cart/remove';
-  getCartUrl = this.api + 'cart/getUserCart';
-  incrementUrl = this.api + 'cart/increment';
-  decrementUrl = this.api + 'cart/decrement';
-  addToCartUrl = this.api + 'pizzas/addToCart';
+  api = 'http://localhost:8082/martiastrid/api/cart/';
+  removeUrl = this.api + 'remove';
+  getCartUrl = this.api + 'getUserCart';
+  incrementUrl = this.api + 'increment';
+  decrementUrl = this.api + 'decrement';
+  addToCartUrl = this.api + 'addAll';
 
   private cart: BehaviorSubject<PizzaQuantity[]> = new BehaviorSubject(this.getCart());
-  cartObservable: Observable<PizzaQuantity[]> = this.cart.asObservable();
+  readonly cartObservable: Observable<PizzaQuantity[]> = this.cart.asObservable();
 
-  constructor(private authenticationService: AuthenticationService,
-              private http: HttpClient) {}
+  constructor(private authenticationService: AuthenticationService, private http: HttpClient) {}
 
   private getCart(): PizzaQuantity[] {
     if (this.authenticationService.isLoggedIn()) {
       // l'utilisateur est connecté
       this.getCartFromApi().subscribe(iPizzaQuantities => this.setLocalCart(iPizzaQuantities));
     }
-    const cart = JSON.parse(localStorage.getItem('pizzaCart'));
+    const cart: PizzaQuantity[] = JSON.parse(localStorage.getItem('pizzaCart'));
     return (cart == null) ? [] : cart;
   }
 
@@ -67,6 +66,11 @@ export class CartService {
       indexNewPQ++;
     }
     this.setLocalCart(cart);
+  }
+
+  onConnection() {
+    const localCart: PizzaQuantity[] = JSON.parse(localStorage.getItem('pizzaCart'));
+    this.addToCart(localCart);
   }
 
   getCartFromApi(): Observable<PizzaQuantity[]> {

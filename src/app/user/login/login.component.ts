@@ -4,6 +4,7 @@ import {AuthenticationService} from '../../services/authentication.service';
 import {first} from 'rxjs/operators';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PizzaService} from '../../products/services/pizzaService';
+import {CartService} from '../../products/services/cartService';
 
 @Component({
   selector: 'app-login-component',
@@ -21,6 +22,7 @@ export class LoginComponent implements OnInit {
               private authenticationService: AuthenticationService,
               private route: ActivatedRoute,
               private pizzaService: PizzaService,
+              private cartService: CartService,
               private router: Router) {
   }
 
@@ -56,6 +58,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         data => {
           this.pizzaService.chargeFavoritePizzas();
+          this.cartService.onConnection();
           this.router.navigate(['/standardPizzas']);
         },
         error => this.errorMessage = JSON.stringify(error));

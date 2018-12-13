@@ -1,13 +1,12 @@
-import {Ingredient} from './Ingredient';
 import {listEquals} from '../utils/list-util';
-import {Recipe} from './Recipe';
+import {Recipe, RecipeComparable} from './Recipe';
 
 export interface Pizza {
-  id: number;
+  id?: number;
   genericName: string;
   price: number;
-  recettes: Recipe[];
-  favorite: boolean;
+  recipes: Recipe[];
+  favorite?: boolean;
   category: string[];
 }
 
@@ -23,7 +22,9 @@ export class PizzaComparable {
     if (this.pizza.genericName === 'CustomPizza') {
       if (other.pizza.genericName === 'CustomPizza') {
         // two custom need to be compared by their ingredients
-        return listEquals(this.pizza.ingredients, other.pizza.ingredients);
+        return listEquals(this.pizza.recipes
+            .map(recipe => new RecipeComparable(recipe)),
+          other.pizza.recipes.map(recipe => new RecipeComparable(recipe)));
       } else {
         // this one is custom but not the other, different pizzas then
         return false;

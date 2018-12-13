@@ -44,9 +44,9 @@
               <span class="message">{{pizzaQuantity.pizza.genericName}}</span>
             </h4>
             <p>
-                <span *ngFor="let ingredient of pizzaQuantity.pizza.ingredients"
+                <span *ngFor="let recipe of pizzaQuantity.pizza.recipes"
                       class="message">
-                  {{ingredient.genericName}}
+                  {{recipe.quantity > 1 ? recipe.quantity + '-' : '' }}{{recipe.ingredient.genericName}}
                 </span>
             </p>
           </div>

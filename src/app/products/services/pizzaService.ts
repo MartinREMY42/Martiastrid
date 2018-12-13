@@ -27,6 +27,7 @@ export class PizzaService {
 
   chargeFavoritePizzas() {
     this.getAllPizzas().subscribe( pizzas => {
+      console.log('all pizza charged from db : ' + JSON.stringify(pizzas));
       this.allPizzas = pizzas;
       if (this.authenticationService.isLoggedIn()) {
         this.getAllFavoritesPizzas().subscribe(favoritePizzas =>

@@ -1,24 +1,26 @@
-export class Ingredient {
-
+export interface Ingredient {
+  id: number;
+  genericName: string;
+  stockQuantity: number;
+  priceForComposition: number;
+  selected: boolean;
+}
+export class IngredientComparable {
   id: number;
   genericName: string;
   stockQuantity: number;
   priceForComposition: number;
   selected: boolean;
 
-  constructor(id: number,
-              genericName: string,
-              stockQuantity: number,
-              priceForComposition: number,
-              selected: boolean) {
-    this.id = id;
-    this.genericName = genericName;
-    this.stockQuantity = stockQuantity;
-    this.priceForComposition = priceForComposition;
-    this.selected = selected;
+    constructor(ingredient: Ingredient) {
+    this.id = ingredient.id;
+    this.genericName = ingredient.genericName;
+    this.stockQuantity = ingredient.stockQuantity;
+    this.priceForComposition = ingredient.priceForComposition;
+    this.selected = ingredient.selected;
   }
 
-  equals(other: Ingredient) {
+  equals(other: IngredientComparable) {
     return this.id === other.id;
   }
 
